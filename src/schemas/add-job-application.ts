@@ -21,11 +21,11 @@ export const addJobApplicationInputSchema = z.object({
       /^\d{4}-\d{2}-\d{2}$/,
       "Date must be in YYYY-MM-DD format"
     )
-    .describe("Date when the application was submitted"),
+    .describe("Date when the application was submitted (YYYY-MM-DD)"),
 
   applicationLink: z
-    .string()
+    .string() 
     .trim()
-    .url("Please enter a valid URL")
-    .describe("Link to the job posting or application"),
+    .url("Please enter a valid URL starting with http:// or https://")
+    .describe("Enter a complete link starting with https:// or http:// (e.g., https://company.com/job)"),
 });
