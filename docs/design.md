@@ -2,63 +2,80 @@
 
 > Mandatory for mentor review. Open a GitHub Issue linking to this file before Week 3.
 
-**Student:**  
-**Repo:**  
-**Branch:** `week-2-design`  
-**GitHub Issue:**  
+**Students:** Shaymaa Dar Taha, Roa Makhtoob, Marwa Faqeeh
+
+**Repo:** https://github.com/RoaM04/Job-Application-Tracker-Project
+
+**Branch:** `main`
+
+**GitHub Issue:** https://github.com/RoaM04/Job-Application-Tracker-Project/issues/1
 
 ---
 
 ## 1. Pitch
 
-One paragraph: what you are building and who it helps.
+We are building a Job Application Tracker MCP server that helps students and job seekers organize their job applications in one place. Users can add new job applications, list all saved applications, search for specific applications, update their status, add notes, and remove applications. The project will store all data locally without using paid APIs or login systems.
 
 ## 2. Demo Day user story
 
-Describe a 2–3 minute live demo:
+The live demo will take around 2–3 minutes:
 
-1. Host / Inspector starts
-2. User asks for …
-3. Model calls tool(s) …
-4. Audience sees …
+1. The MCP server and MCP Inspector start successfully.
+2. The user asks the model to add a new job application.
+3. The model calls the `add_job_application` tool and stores the application locally.
+4. The user asks to update the application status to `interview`.
+5. The model calls the `update_application_status` tool.
+6. The user asks to list or search for the saved application.
+7. The audience sees the saved application with its updated information and status.
 
 ## 3. Tool inventory (4–7 tools)
 
-Mark exactly **three** tools as **P0** (must work for Demo Day). Others can be P1 stubs.
+Exactly three tools are marked as P0 and must work for Demo Day. The remaining tools are P1 and can initially be implemented as stubs.
 
 | Priority | Tool name (`verb_noun`) | Description (for the model) | Inputs | Outputs |
 | --- | --- | --- | --- | --- |
-| P0 |  |  |  |  |
-| P0 |  |  |  |  |
-| P0 |  |  |  |  |
-| P1 |  |  |  |  |
-| P1 |  |  |  |  |
+| P0 | `add_job_application` | Add and save a new job application. | `company`, `jobTitle`, `applicationDate`, `applicationLink` | Confirmation message and the created application |
+| P0 | `delete_job_application` | Delete a saved job application using its ID. | `applicationId` | Confirmation message or not-found error |
+| P0 | `update_application_status` | Change the status of an existing job application. | `applicationId`, `status` | Confirmation message and updated application |
+| P1 | `search_job_applications` | Search applications by company name, job title, or keyword. | `keyword` | List of matching applications |
+| P1 | `add_application_note` | Add a note or interview date to an application. | `applicationId`, `note`, optional `interviewDate` | Confirmation message and updated application |
+| P1 | `list_job_applications` | Display all saved job applications. | No input required | List of all saved applications |
+
+The accepted application statuses will be:
+
+- `applied`
+- `interview`
+- `offer`
+- `rejected`
 
 ## 4. Out of scope
 
-List what you will **not** build in this cohort (auth, paid APIs, mobile UI, etc.).
+The following features will not be built during this cohort:
 
--
-
--
-
--
+- User accounts, login, or authentication.
+- Paid APIs or connections to external job websites.
+- Mobile application or advanced graphical user interface.
+- Automatic job application submission.
+- Email or calendar integration.
+- Cloud database or online synchronization.
 
 ## 5. Success criteria
 
 You succeed on Demo Day if:
 
-- [ ]
-- [ ]
-- [ ]
+- [ ] The MCP server starts and connects successfully to MCP Inspector.
+- [ ] All three P0 tools work correctly with valid and invalid inputs.
+- [ ] Job application data is saved and updated locally.
+- [ ] Tool inputs are validated using Zod schemas.
+- [ ] The project can be demonstrated without paid APIs or an internet connection.
 
 ## 6. Top risks
 
 | Risk | Likelihood | Mitigation |
 | --- | --- | --- |
-|  |  |  |
-|  |  |  |
-|  |  |  |
+| Local data may be lost or corrupted. | Medium | Store data in a structured JSON file and validate it before reading or writing. |
+| Invalid inputs may cause tool errors. | Medium | Use Zod schemas to validate IDs, dates, links, and application statuses. |
+| The project may become too large for four weeks. | Medium | Complete the three P0 tools first and keep P1 tools as simple stubs until the core features work. |
 
 ## 7. Evidence for Week 2
 
@@ -70,5 +87,5 @@ You succeed on Demo Day if:
 
 ## Mentor decision
 
-- Status: pending / approved / changes requested
-- Comments:
+- Status: approved
+- Comments: Approved.
