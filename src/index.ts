@@ -3,6 +3,7 @@ import { serveStdio } from "@modelcontextprotocol/server/stdio";
 
 import { registerDeleteJobApplicationTool } from "./tools/delete-job-application.js";
 import { registerAddJobApplicationNoteTool } from "./tools/add-job-application-note.js";
+import { registerRemoveJobApplicationNoteTool } from "./tools/remove-job-application-note.js";
 
 function createServer(): McpServer {
   const server = new McpServer({
@@ -13,6 +14,7 @@ function createServer(): McpServer {
 
   registerDeleteJobApplicationTool(server);
   registerAddJobApplicationNoteTool(server);
+  registerRemoveJobApplicationNoteTool(server);
 
   return server;
 }
