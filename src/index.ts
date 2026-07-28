@@ -3,6 +3,7 @@ import { serveStdio } from "@modelcontextprotocol/server/stdio";
 
 
 import { registerAddJobApplicationTool } from "./tools/add-job-application.js";
+import { SearchJobApplicationsTool } from "./tools/search-job-applications.js";
 
 /**
  * Factory used by stdio (and later HTTP) so every connection gets a fresh server.
@@ -16,6 +17,7 @@ function createServer(): McpServer {
 
   // Week 2 tools
   registerAddJobApplicationTool(server);
+  SearchJobApplicationsTool(server);
 
   return server;
 }
