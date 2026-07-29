@@ -6,6 +6,8 @@ import { SearchJobApplicationsTool } from "./tools/search-job-applications.js";
 import { registerDeleteJobApplicationTool } from "./tools/delete-job-application.js";
 import { registerAddJobApplicationNoteTool } from "./tools/add-job-application-note.js";
 import { registerRemoveJobApplicationNoteTool } from "./tools/remove-job-application-note.js";
+import { registerUpdateApplicationStatusTool } from "./tools/update-application-status.js";
+
 
 /**
  * Factory used by stdio so every connection gets a fresh server.
@@ -22,6 +24,8 @@ function createServer(): McpServer {
   registerDeleteJobApplicationTool(server);
   registerAddJobApplicationNoteTool(server);
   registerRemoveJobApplicationNoteTool(server);
+  registerUpdateApplicationStatusTool(server);
+
 
   return server;
 }
