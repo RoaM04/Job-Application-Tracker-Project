@@ -7,6 +7,7 @@ import { registerDeleteJobApplicationTool } from "./tools/delete-job-application
 import { registerAddJobApplicationNoteTool } from "./tools/add-job-application-note.js";
 import { registerRemoveJobApplicationNoteTool } from "./tools/remove-job-application-note.js";
 import { registerUpdateApplicationStatusTool } from "./tools/update-application-status.js";
+import { registerListJobApplicationsTool } from "./tools/list-job-applications.js";
 
 
 /**
@@ -25,6 +26,7 @@ function createServer(): McpServer {
   registerAddJobApplicationNoteTool(server);
   registerRemoveJobApplicationNoteTool(server);
   registerUpdateApplicationStatusTool(server);
+  registerListJobApplicationsTool(server);
 
 
   return server;
