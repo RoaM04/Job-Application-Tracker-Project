@@ -1,13 +1,15 @@
 import { McpServer } from "@modelcontextprotocol/server";
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
 
-
 import { registerAddJobApplicationTool } from "./tools/add-job-application.js";
 import { SearchJobApplicationsTool } from "./tools/search-job-applications.js";
+import { registerDeleteJobApplicationTool } from "./tools/delete-job-application.js";
+import { registerAddJobApplicationNoteTool } from "./tools/add-job-application-note.js";
+import { registerRemoveJobApplicationNoteTool } from "./tools/remove-job-application-note.js";
 
 /**
- * Factory used by stdio (and later HTTP) so every connection gets a fresh server.
- * Register all tools inside this function — never on a shared global instance.
+ * Factory used by stdio so every connection gets a fresh server.
+ * Register all tools inside this function.
  */
 function createServer(): McpServer {
   const server = new McpServer({
@@ -15,9 +17,11 @@ function createServer(): McpServer {
     version: "0.1.0",
   });
 
-  // Week 2 tools
   registerAddJobApplicationTool(server);
   SearchJobApplicationsTool(server);
+  registerDeleteJobApplicationTool(server);
+  registerAddJobApplicationNoteTool(server);
+  registerRemoveJobApplicationNoteTool(server);
 
   return server;
 }
