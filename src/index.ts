@@ -9,7 +9,7 @@ import { registerRemoveJobApplicationNoteTool } from "./tools/remove-job-applica
 import { registerUpdateApplicationStatusTool } from "./tools/update-application-status.js";
 import { registerListJobApplicationsTool } from "./tools/list-job-applications.js";
 import { registerGetApplicationStatisticsTool } from "./tools/get-application-statistics.js";
-
+import { registerUpdateJobApplicationDetailsTool } from "./tools/update-job-application-details.js";
 
 /**
  * Factory used by stdio so every connection gets a fresh server.
@@ -29,6 +29,7 @@ function createServer(): McpServer {
   registerUpdateApplicationStatusTool(server);
   registerListJobApplicationsTool(server);
   registerGetApplicationStatisticsTool(server);
+  registerUpdateJobApplicationDetailsTool(server);
 
 
   return server;
