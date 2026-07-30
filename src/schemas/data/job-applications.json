@@ -1,0 +1,20 @@
+[
+  {
+    "company": "Google",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-07-30",
+    "applicationLink": "https://careers.google.com",
+    "status": "Applied",
+    "notes": []
+  },
+  {
+    "company": "Microsoft",
+    "jobTitle": "Backend Developer",
+    "applicationDate": "2026-07-28",
+    "applicationLink": "https://careers.microsoft.com",
+    "status": "Interview",
+    "notes": [
+      "Technical interview on August 5"
+    ]
+  }
+]
