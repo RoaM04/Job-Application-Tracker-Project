@@ -14,7 +14,7 @@
 
 ## 1. Pitch
 
-We are building a Job Application Tracker MCP server that helps students and job seekers organize their job applications in one place. Users can add new job applications, list all saved applications, search for specific applications, update their status, add notes, and remove applications. The project will store all data locally without using paid APIs or login systems.
+We are building a Job Application Tracker MCP server that helps students and job seekers organize their job applications in one place. Users can add new job applications, list all saved applications, search for specific applications, update their status, add notes, and remove applications. The project stores all data locally without using paid APIs or login systems.
 
 ## 2. Demo Day user story
 
@@ -23,10 +23,10 @@ The live demo will take around 2–3 minutes:
 1. The MCP server and MCP Inspector start successfully.
 2. The user asks the model to add a new job application.
 3. The model calls the `add_job_application` tool and stores the application locally.
-4. The user asks to update the application status to `interview`.
+4. The user asks to update the application status to `Interview`.
 5. The model calls the `update_application_status` tool.
-6. The user asks to list or search for the saved application.
-7. The audience sees the saved application with its updated information and status.
+6. The user asks to search or list the saved applications.
+7. The audience sees the saved application with its updated status.
 
 ## 3. Tool inventory (4–7 tools)
 
@@ -34,19 +34,19 @@ Exactly three tools are marked as P0 and must work for Demo Day. The remaining t
 
 | Priority | Tool name (`verb_noun`) | Description (for the model) | Inputs | Outputs |
 | --- | --- | --- | --- | --- |
-| P0 | `add_job_application` | Add and save a new job application. | `company`, `jobTitle`, `applicationDate`, `applicationLink` | Confirmation message and the created application |
-| P0 | `delete_job_application` | Delete a saved job application using its ID. | `applicationId` | Confirmation message or not-found error |
-| P0 | `update_application_status` | Change the status of an existing job application. | `applicationId`, `status` | Confirmation message and updated application |
-| P1 | `search_job_applications` | Search applications by company name, job title, or keyword. | `keyword` | List of matching applications |
-| P1 | `add_application_note` | Add a note or interview date to an application. | `applicationId`, `note`, optional `interviewDate` | Confirmation message and updated application |
-| P1 | `list_job_applications` | Display all saved job applications. | No input required | List of all saved applications |
+| P0 | `add_job_application` | Add and save a new job application including the company name, job title, application date, and application link. | `company`, `jobTitle`, `applicationDate`, `applicationLink` | Confirmation message and the created application |
+| P0 | `delete_job_application` | Delete a saved job application by its company name and job title. | `company`, `jobTitle` | Confirmation message or not-found error |
+| P0 | `update_application_status` | Update the status of an existing job application. | `company`, `jobTitle`, `status` | Confirmation message and the updated application |
+| P1 | `search_job_applications` | Search job applications by company name, job title, or keyword. | `keyword` | List of matching applications |
+| P1 | `add_application_note` | Add a note or interview date to an existing job application. | `company`, `jobTitle`, `note`, optional `interviewDate` | Confirmation message and the updated application |
+| P1 | `list_job_applications` | List all saved job applications. | No input required | List of all saved applications |
 
 The accepted application statuses will be:
 
-- `applied`
-- `interview`
-- `offer`
-- `rejected`
+- `Applied`
+- `Interview`
+- `Accepted`
+- `Rejected`
 
 ## 4. Out of scope
 
@@ -74,8 +74,8 @@ You succeed on Demo Day if:
 | Risk | Likelihood | Mitigation |
 | --- | --- | --- |
 | Local data may be lost or corrupted. | Medium | Store data in a structured JSON file and validate it before reading or writing. |
-| Invalid inputs may cause tool errors. | Medium | Use Zod schemas to validate IDs, dates, links, and application statuses. |
-| The project may become too large for four weeks. | Medium | Complete the three P0 tools first and keep P1 tools as simple stubs until the core features work. |
+| Invalid inputs may cause tool errors. | Medium | Use Zod schemas to validate required fields, dates, URLs, and application statuses. |
+| The project may become too large for four weeks. | Medium | Complete the three P0 tools first and keep the P1 tools simple until the core features work. |
 
 ## 7. Evidence for Week 2
 
@@ -85,7 +85,15 @@ You succeed on Demo Day if:
 - [ ] `examples/<tool>.json` for each registered tool
 - [ ] Inspector screenshots attached to the GitHub Issue
 
+## Notes from reading the Filesystem MCP Server
+
+- Tool names follow a consistent action-based naming style, using verbs like read, write, list, search, create, edit, and move.
+- Most tool descriptions are short and explain exactly one responsibility for each tool.
+- Read-only tools are clearly separated from tools that modify data, making their behavior easy to understand.
+- Tool metadata such as `readOnlyHint`, `idempotentHint`, and `destructiveHint` helps explain whether a tool changes data or can be safely repeated.
+- Notes and error-related behavior are written in simple language, explaining what happens when a tool is called more than once or performs a destructive action.
+
 ## Mentor decision
 
-- Status: approved
+- Status: Approved
 - Comments: Approved.
