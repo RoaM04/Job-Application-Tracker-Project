@@ -3,6 +3,12 @@
 ## Selected Project
 Job Application Tracker
 
+## Team Members
+
+- Shaymaa Dar Taha
+- Roa Makhtoob
+- Marwa Faqeeh
+
 ## Project Evaluation
 
 | Project | Interest | Offline Demo | No Paid API | Finish in 4 Weeks | Total |
