@@ -1,5 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/server";
+
 import { getApplicationStatisticsInputSchema } from "../schemas/get-application-statistics.js";
+import { readJobApplications } from "../lib/job-applications-file.js";
 
 export function registerGetApplicationStatisticsTool(
   server: McpServer
@@ -13,14 +15,56 @@ export function registerGetApplicationStatisticsTool(
       inputSchema: getApplicationStatisticsInputSchema,
     },
     async () => {
-      return {
-        content: [
-          {
-            type: "text",
-            text: "Application statistics generated successfully.",
-          },
-        ],
-      };
+      try {
+        const applications = await readJobApplications();
+
+        const statistics = {
+          total: applications.length,
+          Applied: 0,
+          Interview: 0,
+          Accepted: 0,
+          Rejected: 0,
+        };
+
+        for (const application of applications) {
+          statistics[application.status]++;
+        }
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(
+                {
+                  message:
+                    "Application statistics generated successfully.",
+                  statistics,
+                },
+                null,
+                2
+              ),
+            },
+          ],
+        };
+      } catch (error) {
+        console.error(
+          "[get_application_statistics] Failed:",
+          error
+        );
+
+        return {
+          isError: true,
+          content: [
+            {
+              type: "text",
+              text:
+                error instanceof Error
+                  ? error.message
+                  : "Unable to generate application statistics.",
+            },
+          ],
+        };
+      }
     }
   );
 }
