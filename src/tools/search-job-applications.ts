@@ -1,7 +1,11 @@
 import { McpServer } from "@modelcontextprotocol/server";
-import { searchJobApplicationsInputSchema } from "../schemas/search-job-applications.js";
 
-export function SearchJobApplicationsTool(server: McpServer) {
+import { searchJobApplicationsInputSchema } from "../schemas/search-job-applications.js";
+import { readJobApplications } from "../lib/job-applications-file.js";
+
+export function SearchJobApplicationsTool(
+  server: McpServer
+): void {
   server.registerTool(
     "search_job_applications",
     {
@@ -11,20 +15,91 @@ export function SearchJobApplicationsTool(server: McpServer) {
       inputSchema: searchJobApplicationsInputSchema,
     },
     async ({ company, jobTitle, status }) => {
-      // TODO: Read the saved job applications
+      try {
+        const applications =
+          await readJobApplications();
 
-      // TODO: Filter applications based on the provided fields
+        const matchingApplications =
+          applications.filter((application) => {
+            const matchesCompany =
+              !company ||
+              application.company
+                .toLowerCase()
+                .includes(
+                  company.trim().toLowerCase()
+                );
 
-      // TODO: Return the matching results
+            const matchesJobTitle =
+              !jobTitle ||
+              application.jobTitle
+                .toLowerCase()
+                .includes(
+                  jobTitle.trim().toLowerCase()
+                );
 
-      return {
-        content: [
-          {
-            type: "text",
-            text: "Search tool is not implemented yet.",
-          },
-        ],
-      };
+            const matchesStatus =
+              !status ||
+              application.status === status;
+
+            return (
+              matchesCompany &&
+              matchesJobTitle &&
+              matchesStatus
+            );
+          });
+
+        if (
+          matchingApplications.length === 0
+        ) {
+          return {
+            content: [
+              {
+                type: "text",
+                text:
+                  "No matching job applications were found.",
+              },
+            ],
+          };
+        }
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(
+                {
+                  message:
+                    "Matching job applications retrieved successfully.",
+                  count:
+                    matchingApplications.length,
+                  applications:
+                    matchingApplications,
+                },
+                null,
+                2
+              ),
+            },
+          ],
+        };
+      } catch (error) {
+        console.error(
+          "[search_job_applications] Failed:",
+          error
+        );
+
+        return {
+          isError: true,
+          content: [
+            {
+              type: "text",
+              text:
+                error instanceof Error
+                  ? error.message
+                  : "Unable to search job applications.",
+            },
+          ],
+        };
+      }
     }
   );
 }
