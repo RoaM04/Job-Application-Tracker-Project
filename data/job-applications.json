@@ -6,7 +6,9 @@
     "applicationLink": "https://careers.google.com/jobs/12345",
     "status": "Applied",
     "notes": [
-      "Applied through careers page."
+      "Applied through Google Careers.",
+      "Waiting for recruiter response.",
+      "hiiiiiiiiiiiiii"
     ]
   },
   {
@@ -23,8 +25,124 @@
     "company": "Amazon",
     "jobTitle": "Cloud Engineer",
     "applicationDate": "2026-07-20",
-    "applicationLink": "https://www.amazon.jobs/en/jobs/54321",
+    "applicationLink": "https://amazon.jobs/jobs/54321",
     "status": "Rejected",
+    "notes": [
+      "Received rejection email.",
+      "welcooooooooooom"
+    ]
+  },
+  {
+    "company": "Meta",
+    "jobTitle": "Frontend Engineer",
+    "applicationDate": "2026-07-22",
+    "applicationLink": "https://www.metacareers.com/jobs/1001",
+    "status": "Applied",
     "notes": []
+  },
+  {
+    "company": "Apple",
+    "jobTitle": "iOS Developer",
+    "applicationDate": "2026-07-23",
+    "applicationLink": "https://jobs.apple.com/details/1002",
+    "status": "Interview",
+    "notes": [
+      "Phone screening completed."
+    ]
+  },
+  {
+    "company": "Netflix",
+    "jobTitle": "Full Stack Developer",
+    "applicationDate": "2026-07-24",
+    "applicationLink": "https://jobs.netflix.com/1003",
+    "status": "Applied",
+    "notes": []
+  },
+  {
+    "company": "Tesla",
+    "jobTitle": "Embedded Software Engineer",
+    "applicationDate": "2026-07-25",
+    "applicationLink": "https://www.tesla.com/careers/1004",
+    "status": "Accepted",
+    "notes": [
+      "Offer received.",
+      "Accepted the position."
+    ]
+  },
+  {
+    "company": "Spotify",
+    "jobTitle": "Data Engineer",
+    "applicationDate": "2026-07-26",
+    "applicationLink": "https://www.lifeatspotify.com/jobs/1005",
+    "status": "Applied",
+    "notes": [
+      "Submitted referral."
+    ]
+  },
+  {
+    "company": "Adobe",
+    "jobTitle": "Machine Learning Engineer",
+    "applicationDate": "2026-07-27",
+    "applicationLink": "https://careers.adobe.com/1006",
+    "status": "Interview",
+    "notes": [
+      "Coding assessment completed."
+    ]
+  },
+  {
+    "company": "Oracle",
+    "jobTitle": "Database Engineer",
+    "applicationDate": "2026-07-28",
+    "applicationLink": "https://careers.oracle.com/1007",
+    "status": "Applied",
+    "notes": []
+  },
+  {
+    "company": "IBM",
+    "jobTitle": "AI Engineer",
+    "applicationDate": "2026-07-29",
+    "applicationLink": "https://careers.ibm.com/1008",
+    "status": "Rejected",
+    "notes": [
+      "Position filled."
+    ]
+  },
+  {
+    "company": "Intel",
+    "jobTitle": "Systems Engineer",
+    "applicationDate": "2026-07-30",
+    "applicationLink": "https://jobs.intel.com/1009",
+    "status": "Applied",
+    "notes": []
+  },
+  {
+    "company": "Cisco",
+    "jobTitle": "Network Engineer",
+    "applicationDate": "2026-08-01",
+    "applicationLink": "https://jobs.cisco.com/1010",
+    "status": "Interview",
+    "notes": [
+      "HR interview completed."
+    ]
+  },
+  {
+    "company": "NVIDIA",
+    "jobTitle": "GPU Software Engineer",
+    "applicationDate": "2026-08-02",
+    "applicationLink": "https://www.nvidia.com/en-us/about-nvidia/careers/1011",
+    "status": "Applied",
+    "notes": [
+      "Resume submitted."
+    ]
+  },
+  {
+    "company": "Airbnb",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-08-03",
+    "applicationLink": "https://careers.airbnb.com/1012",
+    "status": "Interview",
+    "notes": [
+      "Behavioral interview next week."
+    ]
   }
 ]
