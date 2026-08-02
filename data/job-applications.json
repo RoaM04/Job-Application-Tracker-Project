@@ -2,27 +2,29 @@
   {
     "company": "Google",
     "jobTitle": "Software Engineer",
-    "applicationDate": "2026-07-30",
-    "applicationLink": "https://careers.google.com",
+    "applicationDate": "2026-07-15",
+    "applicationLink": "https://careers.google.com/jobs/12345",
     "status": "Applied",
-    "notes": []
+    "notes": [
+      "Applied through careers page."
+    ]
   },
   {
     "company": "Microsoft",
-    "jobTitle": "Frontend Developer",
-    "applicationDate": "2026-08-04",
-    "applicationLink": "https://careers.microsoft.com",
+    "jobTitle": "Backend Developer",
+    "applicationDate": "2026-07-18",
+    "applicationLink": "https://careers.microsoft.com/jobs/67890",
     "status": "Interview",
     "notes": [
-      "Technical interview on August 5"
+      "Technical interview scheduled."
     ]
   },
-  { 
+  {
     "company": "Amazon",
-    "jobTitle": "Cloud Support Engineer",
-    "applicationDate": "2026-08-05",
-    "applicationLink": "https://www.amazon.jobs/en/jobs/987654",
-    "status": "Applied",
+    "jobTitle": "Cloud Engineer",
+    "applicationDate": "2026-07-20",
+    "applicationLink": "https://www.amazon.jobs/en/jobs/54321",
+    "status": "Rejected",
     "notes": []
   }
 ]

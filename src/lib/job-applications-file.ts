@@ -1,4 +1,5 @@
 import path from "node:path";
+import { mkdir, writeFile } from "node:fs/promises";
 
 import { readFileWithTimeout } from "./ResponseFile.js";
 
@@ -6,7 +7,6 @@ import {
   jobApplicationsFileSchema,
   type JobApplication,
 } from "../schemas/job-application.js";
-import { mkdir, writeFile } from "node:fs/promises";
 
 const DATA_DIRECTORY_PATH = path.resolve(
   process.cwd(),
@@ -87,6 +87,7 @@ export async function readJobApplications(): Promise<
     );
   }
 }
+
 export async function writeJobApplications(
   applications: JobApplication[]
 ): Promise<void> {
@@ -100,7 +101,7 @@ export async function writeJobApplications(
     );
 
     throw new Error(
-      "Cannot save invalid job application data."
+      "The job applications contain invalid or missing required fields."
     );
   }
 
@@ -116,12 +117,12 @@ export async function writeJobApplications(
     );
   } catch (error) {
     console.error(
-      "[writeJobApplications] Failed:",
+      "[writeJobApplications] Failed to write data:",
       error
     );
 
     throw new Error(
-      "Unable to save the job applications data."
+      "Failed to write the job applications data file."
     );
   }
 }
