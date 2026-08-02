@@ -1,7 +1,10 @@
 import { McpServer } from "@modelcontextprotocol/server";
 
 import { addJobApplicationNoteInputSchema } from "../schemas/add-job-application-note.js";
-import { addJobApplicationNote } from "../lib/job-applications.js";
+import {
+  readJobApplications,
+  writeJobApplications,
+} from "../lib/job-applications-file.js";
 
 export function registerAddJobApplicationNoteTool(
   server: McpServer
@@ -16,12 +19,31 @@ export function registerAddJobApplicationNoteTool(
     },
     async ({ company, jobTitle, note }) => {
       try {
-        const updatedApplication =
-          await addJobApplicationNote(
-            company,
-            jobTitle,
-            note
+        const applications = await readJobApplications();
+
+        const application = applications.find(
+          (currentApplication) =>
+            currentApplication.company
+              .trim()
+              .toLowerCase() ===
+              company.trim().toLowerCase() &&
+            currentApplication.jobTitle
+              .trim()
+              .toLowerCase() ===
+              jobTitle.trim().toLowerCase()
+        );
+
+        if (!application) {
+          throw new Error(
+            `No job application was found for ${company} - ${jobTitle}.`
           );
+        }
+
+        const trimmedNote = note.trim();
+
+        application.notes.push(trimmedNote);
+
+        await writeJobApplications(applications);
 
         return {
           content: [
@@ -30,9 +52,9 @@ export function registerAddJobApplicationNoteTool(
               text: JSON.stringify(
                 {
                   message: "Note added successfully.",
-                  company: updatedApplication.company,
-                  jobTitle: updatedApplication.jobTitle,
-                  note,
+                  company: application.company,
+                  jobTitle: application.jobTitle,
+                  note: trimmedNote,
                 },
                 null,
                 2
