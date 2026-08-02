@@ -6,6 +6,7 @@ import {
   jobApplicationsFileSchema,
   type JobApplication,
 } from "../schemas/job-application.js";
+import { mkdir, writeFile } from "node:fs/promises";
 
 const DATA_DIRECTORY_PATH = path.resolve(
   process.cwd(),
@@ -83,6 +84,44 @@ export async function readJobApplications(): Promise<
 
     throw new Error(
       "Unable to read the job applications data."
+    );
+  }
+}
+export async function writeJobApplications(
+  applications: JobApplication[]
+): Promise<void> {
+  const validationResult =
+    jobApplicationsFileSchema.safeParse(applications);
+
+  if (!validationResult.success) {
+    console.error(
+      "[writeJobApplications] Invalid application data:",
+      validationResult.error
+    );
+
+    throw new Error(
+      "Cannot save invalid job application data."
+    );
+  }
+
+  try {
+    await mkdir(DATA_DIRECTORY_PATH, {
+      recursive: true,
+    });
+
+    await writeFile(
+      DATA_FILE_PATH,
+      JSON.stringify(validationResult.data, null, 2),
+      "utf-8"
+    );
+  } catch (error) {
+    console.error(
+      "[writeJobApplications] Failed:",
+      error
+    );
+
+    throw new Error(
+      "Unable to save the job applications data."
     );
   }
 }
