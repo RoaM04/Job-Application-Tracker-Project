@@ -1,4 +1,5 @@
 import path from "node:path";
+import { writeFile } from "node:fs/promises";
 
 import { readFileWithTimeout } from "./ResponseFile.js";
 
@@ -83,6 +84,41 @@ export async function readJobApplications(): Promise<
 
     throw new Error(
       "Unable to read the job applications data."
+    );
+  }
+}
+
+export async function writeJobApplications(
+  applications: JobApplication[]
+): Promise<void> {
+  const validationResult =
+    jobApplicationsFileSchema.safeParse(applications);
+
+  if (!validationResult.success) {
+    console.error(
+      "[writeJobApplications] Invalid application data:",
+      validationResult.error
+    );
+
+    throw new Error(
+      "The job applications contain invalid or missing required fields."
+    );
+  }
+
+  try {
+    await writeFile(
+      DATA_FILE_PATH,
+      JSON.stringify(validationResult.data, null, 2),
+      "utf-8"
+    );
+  } catch (error) {
+    console.error(
+      "[writeJobApplications] Failed to write data:",
+      error
+    );
+
+    throw new Error(
+      "Failed to write the job applications data file."
     );
   }
 }
