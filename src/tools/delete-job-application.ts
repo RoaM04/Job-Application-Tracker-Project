@@ -1,32 +1,61 @@
 import { McpServer } from "@modelcontextprotocol/server";
 
 import { deleteJobApplicationInputSchema } from "../schemas/delete-job-application.js";
+import { deleteJobApplication } from "../lib/job-applications.js";
 
-export function registerDeleteJobApplicationTool(server: McpServer) {
+export function registerDeleteJobApplicationTool(
+  server: McpServer
+): void {
   server.registerTool(
     "delete_job_application",
     {
-      title: "Delete Job Application",
       description:
-        "Delete an existing job application using its identifying information.",
+        "Delete an existing job application using the company name and job title.",
       inputSchema: deleteJobApplicationInputSchema,
     },
-    async (input) => {
-      const { company, jobTitle } = input;
+    async ({ company, jobTitle }) => {
+      try {
+        const deletedApplication =
+          await deleteJobApplication(company, jobTitle);
 
-      // TODO: Load job applications
-      // TODO: Find the matching application
-      // TODO: Delete the application
-      // TODO: Save the updated list
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(
+                {
+                  message:
+                    `Job application for '${deletedApplication.jobTitle}' ` +
+                    `at '${deletedApplication.company}' has been deleted successfully.`,
+                },
+                null,
+                2
+              ),
+            },
+          ],
+        };
+      } catch (error) {
+        const message =
+          error instanceof Error
+            ? error.message
+            : "An unexpected error occurred while deleting the job application.";
 
-      return {
-        content: [
-          {
-            type: "text",
-            text: `Job application for "${jobTitle}" at "${company}" has been deleted successfully.`,
-          },
-        ],
-      };
+        return {
+          isError: true,
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(
+                {
+                  error: message,
+                },
+                null,
+                2
+              ),
+            },
+          ],
+        };
+      }
     }
   );
 }
