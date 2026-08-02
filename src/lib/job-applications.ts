@@ -34,3 +34,30 @@ export async function deleteJobApplication(
 
   return deletedApplication;
 }
+export async function addJobApplicationNote(
+  company: string,
+  jobTitle: string,
+  note: string
+): Promise<JobApplication> {
+  const applications = await readJobApplications();
+
+  const application = applications.find(
+    (application) =>
+      application.company.toLowerCase() ===
+        company.trim().toLowerCase() &&
+      application.jobTitle.toLowerCase() ===
+        jobTitle.trim().toLowerCase()
+  );
+
+  if (!application) {
+    throw new Error(
+      `Job application for '${jobTitle}' at '${company}' was not found.`
+    );
+  }
+
+  application.notes.push(note.trim());
+
+  await writeJobApplications(applications);
+
+  return application;
+}
