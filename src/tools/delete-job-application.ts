@@ -1,7 +1,10 @@
 import { McpServer } from "@modelcontextprotocol/server";
 
 import { deleteJobApplicationInputSchema } from "../schemas/delete-job-application.js";
-import { deleteJobApplication } from "../lib/job-applications.js";
+import {
+  readJobApplications,
+  writeJobApplications,
+} from "../lib/job-applications-file.js";
 
 export function registerDeleteJobApplicationTool(
   server: McpServer
@@ -9,14 +12,35 @@ export function registerDeleteJobApplicationTool(
   server.registerTool(
     "delete_job_application",
     {
+      title: "Delete Job Application",
       description:
-        "Delete an existing job application using the company name and job title.",
+        "Delete a saved job application using the company name and job title.",
       inputSchema: deleteJobApplicationInputSchema,
     },
     async ({ company, jobTitle }) => {
       try {
-        const deletedApplication =
-          await deleteJobApplication(company, jobTitle);
+        const applications = await readJobApplications();
+
+        const applicationIndex = applications.findIndex(
+          (application) =>
+            application.company.toLowerCase() ===
+              company.trim().toLowerCase() &&
+            application.jobTitle.toLowerCase() ===
+              jobTitle.trim().toLowerCase()
+        );
+
+        if (applicationIndex === -1) {
+          throw new Error(
+            `No job application was found for ${company} - ${jobTitle}.`
+          );
+        }
+
+        const [deletedApplication] = applications.splice(
+          applicationIndex,
+          1
+        );
+
+        await writeJobApplications(applications);
 
         return {
           content: [
@@ -25,8 +49,9 @@ export function registerDeleteJobApplicationTool(
               text: JSON.stringify(
                 {
                   message:
-                    `Job application for '${deletedApplication.jobTitle}' ` +
-                    `at '${deletedApplication.company}' has been deleted successfully.`,
+                    "Job application deleted successfully.",
+                  company: deletedApplication.company,
+                  jobTitle: deletedApplication.jobTitle,
                 },
                 null,
                 2
@@ -38,20 +63,14 @@ export function registerDeleteJobApplicationTool(
         const message =
           error instanceof Error
             ? error.message
-            : "An unexpected error occurred while deleting the job application.";
+            : "Unable to delete the job application.";
 
         return {
           isError: true,
           content: [
             {
               type: "text",
-              text: JSON.stringify(
-                {
-                  error: message,
-                },
-                null,
-                2
-              ),
+              text: message,
             },
           ],
         };

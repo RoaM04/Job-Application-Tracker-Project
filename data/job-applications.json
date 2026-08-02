@@ -1,15 +1,5 @@
 [
   {
-    "company": "Google",
-    "jobTitle": "Software Engineer",
-    "applicationDate": "2026-07-15",
-    "applicationLink": "https://careers.google.com/jobs/12345",
-    "status": "Applied",
-    "notes": [
-      "Applied through careers page."
-    ]
-  },
-  {
     "company": "Microsoft",
     "jobTitle": "Backend Developer",
     "applicationDate": "2026-07-18",
@@ -25,6 +15,14 @@
     "applicationDate": "2026-07-20",
     "applicationLink": "https://www.amazon.jobs/en/jobs/54321",
     "status": "Rejected",
+    "notes": []
+  },
+  {
+    "company": "hi",
+    "jobTitle": "hi",
+    "applicationDate": "5555-55-55",
+    "applicationLink": "https:/f",
+    "status": "Applied",
     "notes": []
   }
 ]
