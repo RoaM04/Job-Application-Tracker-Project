@@ -9,15 +9,15 @@
   },
   {
     "company": "Microsoft",
-    "jobTitle": "Backend Developer",
-    "applicationDate": "2026-07-28",
+    "jobTitle": "Frontend Developer",
+    "applicationDate": "2026-08-04",
     "applicationLink": "https://careers.microsoft.com",
     "status": "Interview",
     "notes": [
       "Technical interview on August 5"
     ]
   },
-  {
+  { 
     "company": "Amazon",
     "jobTitle": "Cloud Support Engineer",
     "applicationDate": "2026-08-05",
