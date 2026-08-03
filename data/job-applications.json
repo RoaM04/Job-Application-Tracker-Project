@@ -1,27 +1,146 @@
 [
   {
-    "company": "Microsoft",
-    "jobTitle": "Backend Developer",
-    "applicationDate": "2026-07-18",
-    "applicationLink": "https://careers.microsoft.com/jobs/67890",
-    "status": "Accepted",
+    "company": "Google",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-07-10",
+    "applicationLink": "https://careers.google.com/jobs/1001",
+    "status": "Interview",
     "notes": [
-      "Technical interview scheduled."
+      "Completed OA",
+      "Technical interview scheduled"
     ]
+  },
+  {
+    "company": "Google",
+    "jobTitle": "Cloud Engineer",
+    "applicationDate": "2026-07-12",
+    "applicationLink": "https://careers.google.com/jobs/1002",
+    "status": "Applied",
+    "notes": [
+      "Applied through referral"
+    ]
+  },
+  {
+    "company": "Google",
+    "jobTitle": "Frontend Developer",
+    "applicationDate": "2026-07-15",
+    "applicationLink": "https://careers.google.com/jobs/1003",
+    "status": "Rejected",
+    "notes": [
+      "Received rejection email"
+    ]
+  },
+  {
+    "company": "Microsoft",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-07-18",
+    "applicationLink": "https://careers.microsoft.com/jobs/2001",
+    "status": "Applied",
+    "notes": [
+      "Waiting for recruiter response"
+    ]
+  },
+  {
+    "company": "Microsoft",
+    "jobTitle": "Cloud Engineer",
+    "applicationDate": "2026-07-20",
+    "applicationLink": "https://careers.microsoft.com/jobs/2002",
+    "status": "Interview",
+    "notes": [
+      "HR interview completed"
+    ]
+  },
+  {
+    "company": "Microsoft",
+    "jobTitle": "DevOps Engineer",
+    "applicationDate": "2026-07-22",
+    "applicationLink": "https://careers.microsoft.com/jobs/2003",
+    "status": "Applied",
+    "notes": []
   },
   {
     "company": "Amazon",
     "jobTitle": "Cloud Engineer",
-    "applicationDate": "2026-07-20",
-    "applicationLink": "https://www.amazon.jobs/en/jobs/54321",
-    "status": "Rejected",
+    "applicationDate": "2026-07-25",
+    "applicationLink": "https://amazon.jobs/3001",
+    "status": "Applied",
+    "notes": [
+      "Application submitted"
+    ]
+  },
+  {
+    "company": "Amazon",
+    "jobTitle": "Backend Developer",
+    "applicationDate": "2026-07-27",
+    "applicationLink": "https://amazon.jobs/3002",
+    "status": "Interview",
+    "notes": [
+      "Phone interview passed"
+    ]
+  },
+  {
+    "company": "Amazon",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-07-28",
+    "applicationLink": "https://amazon.jobs/3003",
+    "status": "Accepted",
+    "notes": [
+      "Offer received"
+    ]
+  },
+  {
+    "company": "Meta",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-07-30",
+    "applicationLink": "https://careers.meta.com/jobs/4001",
+    "status": "Applied",
     "notes": []
   },
   {
-    "company": "hi",
-    "jobTitle": "hi",
-    "applicationDate": "5555-55-55",
-    "applicationLink": "https:/f",
+    "company": "Meta",
+    "jobTitle": "Machine Learning Engineer",
+    "applicationDate": "2026-08-01",
+    "applicationLink": "https://careers.meta.com/jobs/4002",
+    "status": "Interview",
+    "notes": [
+      "Coding interview next week"
+    ]
+  },
+  {
+    "company": "IBM",
+    "jobTitle": "Cloud Engineer",
+    "applicationDate": "2026-08-02",
+    "applicationLink": "https://www.ibm.com/careers/5001",
+    "status": "Applied",
+    "notes": [
+      "Submitted via IBM Careers"
+    ]
+  },
+  {
+    "company": "IBM",
+    "jobTitle": "Data Engineer",
+    "applicationDate": "2026-08-03",
+    "applicationLink": "https://www.ibm.com/careers/5002",
+    "status": "Rejected",
+    "notes": [
+      "Position closed"
+    ]
+  },
+  {
+    "company": "Oracle",
+    "jobTitle": "Cloud Engineer",
+    "applicationDate": "2026-08-04",
+    "applicationLink": "https://careers.oracle.com/jobs/6001",
+    "status": "Interview",
+    "notes": [
+      "Manager interview pending"
+    ]
+  },
+  {
+    "company": "Oracle",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-08-05",
+    "applicationLink": "https://careers.oracle.com/jobs/6002",
     "status": "Applied",
     "notes": []
   }
