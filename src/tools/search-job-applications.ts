@@ -3,7 +3,7 @@ import { McpServer } from "@modelcontextprotocol/server";
 import { searchJobApplicationsInputSchema } from "../schemas/search-job-applications.js";
 import { readJobApplications } from "../lib/job-applications-file.js";
 
-export function SearchJobApplicationsTool(
+export function registerSearchJobApplicationsTool(
   server: McpServer
 ): void {
   server.registerTool(

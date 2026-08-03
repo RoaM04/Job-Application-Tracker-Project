@@ -1,28 +1,64 @@
 [
   {
+    "company": "Google",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-07-20",
+    "applicationLink": "https://careers.google.com/jobs/software-engineer",
+    "status": "Applied",
+    "notes": [
+      "Submitted through Google Careers.",
+      "Waiting for recruiter response."
+    ]
+  },
+  {
     "company": "Microsoft",
-    "jobTitle": "Backend Developer",
-    "applicationDate": "2026-07-18",
-    "applicationLink": "https://careers.microsoft.com/jobs/67890",
+    "jobTitle": "Cloud Engineer",
+    "applicationDate": "2026-07-22",
+    "applicationLink": "https://careers.microsoft.com/jobs/cloud-engineer",
     "status": "Interview",
     "notes": [
-      "Technical interview scheduled."
+      "First interview scheduled for August 10."
     ]
   },
   {
     "company": "Amazon",
-    "jobTitle": "Cloud Engineer",
-    "applicationDate": "2026-07-20",
-    "applicationLink": "https://www.amazon.jobs/en/jobs/54321",
+    "jobTitle": "Backend Developer",
+    "applicationDate": "2026-07-25",
+    "applicationLink": "https://www.amazon.jobs/backend-developer",
     "status": "Rejected",
+    "notes": [
+      "Received rejection email."
+    ]
+  },
+  {
+    "company": "Meta",
+    "jobTitle": "Full Stack Engineer",
+    "applicationDate": "2026-07-28",
+    "applicationLink": "https://www.metacareers.com/jobs/full-stack-engineer",
+    "status": "Applied",
     "notes": []
   },
   {
-    "company": "hi",
-    "jobTitle": "hi",
-    "applicationDate": "5555-55-55",
-    "applicationLink": "https:/f",
-    "status": "Applied",
-    "notes": []
+    "company": "Apple",
+    "jobTitle": "iOS Developer",
+    "applicationDate": "2026-07-30",
+    "applicationLink": "https://jobs.apple.com/ios-developer",
+    "status": "Accepted",
+    "notes": [
+      "Offer received.",
+      "Need to respond before August 8."
+    ]
+  },
+  {
+    "company": "Netflix",
+    "jobTitle": "Platform Engineer",
+    "applicationDate": "2026-08-01",
+    "applicationLink": "https://jobs.netflix.com/platform-engineer",
+    "status": "Interview",
+    "notes": [
+      "Technical interview completed.",
+      "Waiting for final interview."
+    ]
   }
+ 
 ]

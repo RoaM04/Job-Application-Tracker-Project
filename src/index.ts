@@ -2,15 +2,15 @@ import { McpServer } from "@modelcontextprotocol/server";
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
 
 import { registerAddJobApplicationTool } from "./tools/add-job-application.js";
-import { SearchJobApplicationsTool } from "./tools/search-job-applications.js";
+import { registerSearchJobApplicationsTool } from "./tools/search-job-applications.js";
 import { registerDeleteJobApplicationTool } from "./tools/delete-job-application.js";
-import { registerAddJobApplicationNoteTool } from "./tools/add-job-application-note.js";
+//import { registerAddJobApplicationNoteTool } from "./tools/add-job-application-note.js";
 import { registerUpdateApplicationStatusTool } from "./tools/update-application-status.js";
-import { registerListJobApplicationsTool } from "./tools/list-job-applications.js";
+//import { registerListJobApplicationsTool } from "./tools/list-job-applications.js";
 import { registerGetApplicationStatisticsTool } from "./tools/get-application-statistics.js";
 import { registerUpdateJobApplicationDetailsTool } from "./tools/update-job-application-details.js";
-import { registerMarkApplicationAsFavoriteTool } from "./tools/mark-application-as-favorite.js";
-import { registerDetectDuplicateApplicationsTool } from "./tools/detect-duplicate-applications.js";
+//import { registerMarkApplicationAsFavoriteTool } from "./tools/mark-application-as-favorite.js";
+//import { registerDetectDuplicateApplicationsTool } from "./tools/detect-duplicate-applications.js";
 
 /**
  * Factory used by stdio so every connection gets a fresh server.
@@ -23,15 +23,15 @@ function createServer(): McpServer {
   });
 
   registerAddJobApplicationTool(server);
-  SearchJobApplicationsTool(server);
+  registerSearchJobApplicationsTool(server);
   registerDeleteJobApplicationTool(server);
-  registerAddJobApplicationNoteTool(server);
+ // registerAddJobApplicationNoteTool(server);
   registerUpdateApplicationStatusTool(server);
-  registerListJobApplicationsTool(server);
+ // registerListJobApplicationsTool(server);
   registerGetApplicationStatisticsTool(server);
   registerUpdateJobApplicationDetailsTool(server);
-  registerMarkApplicationAsFavoriteTool(server);
-  registerDetectDuplicateApplicationsTool(server);
+  //registerMarkApplicationAsFavoriteTool(server);
+  //registerDetectDuplicateApplicationsTool(server);
   
 
 
