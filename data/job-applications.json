@@ -2,7 +2,6 @@
   {
     "company": "Google",
     "jobTitle": "Software Engineer",
-<<<<<<< HEAD
     "applicationDate": "2026-07-20",
     "applicationLink": "https://careers.google.com/jobs/software-engineer",
     "status": "Applied",
@@ -19,14 +18,6 @@
     "status": "Accepted",
     "notes": [
       "First interview scheduled for August 10."
-=======
-    "applicationDate": "2026-07-10",
-    "applicationLink": "https://careers.google.com/jobs/1001",
-    "status": "Interview",
-    "notes": [
-      "Completed OA",
-      "Technical interview scheduled"
->>>>>>> git-application-details
     ]
   },
   {
@@ -79,14 +70,6 @@
   },
   {
     "company": "Amazon",
-<<<<<<< HEAD
-    "jobTitle": "Backend Developer",
-    "applicationDate": "2026-07-25",
-    "applicationLink": "https://www.amazon.jobs/backend-developer",
-    "status": "Rejected",
-    "notes": [
-      "Received rejection email."
-=======
     "jobTitle": "Cloud Engineer",
     "applicationDate": "2026-07-25",
     "applicationLink": "https://amazon.jobs/3001",
@@ -113,46 +96,17 @@
     "status": "Accepted",
     "notes": [
       "Offer received"
->>>>>>> git-application-details
     ]
   },
   {
     "company": "Meta",
-<<<<<<< HEAD
-    "jobTitle": "Full Stack Engineer",
-    "applicationDate": "2026-07-28",
-    "applicationLink": "https://www.metacareers.com/jobs/full-stack-engineer",
-=======
     "jobTitle": "Software Engineer",
     "applicationDate": "2026-07-30",
     "applicationLink": "https://careers.meta.com/jobs/4001",
->>>>>>> git-application-details
     "status": "Applied",
     "notes": []
   },
   {
-<<<<<<< HEAD
-    "company": "Apple",
-    "jobTitle": "iOS Developer",
-    "applicationDate": "2026-07-30",
-    "applicationLink": "https://jobs.apple.com/ios-developer",
-    "status": "Accepted",
-    "notes": [
-      "Offer received.",
-      "Need to respond before August 8."
-    ]
-  },
-  {
-    "company": "Netflix",
-    "jobTitle": "Platform Engineer",
-    "applicationDate": "2026-08-01",
-    "applicationLink": "https://jobs.netflix.com/platform-engineer",
-    "status": "Interview",
-    "notes": [
-      "Technical interview completed.",
-      "Waiting for final interview."
-    ]
-=======
     "company": "Meta",
     "jobTitle": "Machine Learning Engineer",
     "applicationDate": "2026-08-01",
@@ -199,7 +153,6 @@
     "applicationLink": "https://careers.oracle.com/jobs/6002",
     "status": "Applied",
     "notes": []
->>>>>>> git-application-details
   }
  
 ]
