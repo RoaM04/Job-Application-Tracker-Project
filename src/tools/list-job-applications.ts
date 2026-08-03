@@ -1,5 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/server";
 import { listJobApplicationsInputSchema } from "../schemas/list-job-applications.js";
+import { readJobApplications } from "../lib/job-applications-file.js";
 
 export function registerListJobApplicationsTool(
   server: McpServer
@@ -12,14 +13,38 @@ export function registerListJobApplicationsTool(
       inputSchema: listJobApplicationsInputSchema,
     },
     async () => {
-      return {
-        content: [
-          {
-            type: "text",
-            text: "Listing all job applications (stub).",
-          },
-        ],
-      };
+      try {
+        const applications = await readJobApplications();
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(
+                {
+                  total: applications.length,
+                  applications,
+                },
+                null,
+                2
+              ),
+            },
+          ],
+        };
+      } catch (error) {
+        return {
+          isError: true,
+          content: [
+            {
+              type: "text",
+              text:
+                error instanceof Error
+                  ? error.message
+                  : "Failed to read job applications.",
+            },
+          ],
+        };
+      }
     }
   );
 }
