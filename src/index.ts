@@ -10,7 +10,6 @@ import { registerListJobApplicationsTool } from "./tools/list-job-applications.j
 import { registerGetApplicationStatisticsTool } from "./tools/get-application-statistics.js";
 import { registerUpdateJobApplicationDetailsTool } from "./tools/update-job-application-details.js";
 import { registerMarkApplicationAsFavoriteTool } from "./tools/mark-application-as-favorite.js";
-import { registerDetectDuplicateApplicationsTool } from "./tools/detect-duplicate-applications.js";
 
 /**
  * Factory used by stdio so every connection gets a fresh server.
@@ -31,7 +30,6 @@ function createServer(): McpServer {
   registerGetApplicationStatisticsTool(server);
   registerUpdateJobApplicationDetailsTool(server);
   registerMarkApplicationAsFavoriteTool(server);
-  registerDetectDuplicateApplicationsTool(server);
   
 
 
