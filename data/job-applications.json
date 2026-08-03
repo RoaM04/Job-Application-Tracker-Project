@@ -2,6 +2,7 @@
   {
     "company": "Google",
     "jobTitle": "Software Engineer",
+<<<<<<< HEAD
     "applicationDate": "2026-07-20",
     "applicationLink": "https://careers.google.com/jobs/software-engineer",
     "status": "Applied",
@@ -18,27 +19,119 @@
     "status": "Accepted",
     "notes": [
       "First interview scheduled for August 10."
+=======
+    "applicationDate": "2026-07-10",
+    "applicationLink": "https://careers.google.com/jobs/1001",
+    "status": "Interview",
+    "notes": [
+      "Completed OA",
+      "Technical interview scheduled"
+>>>>>>> git-application-details
     ]
   },
   {
+    "company": "Google",
+    "jobTitle": "Cloud Engineer",
+    "applicationDate": "2026-07-12",
+    "applicationLink": "https://careers.google.com/jobs/1002",
+    "status": "Applied",
+    "notes": [
+      "Applied through referral"
+    ]
+  },
+  {
+    "company": "Google",
+    "jobTitle": "Frontend Developer",
+    "applicationDate": "2026-07-15",
+    "applicationLink": "https://careers.google.com/jobs/1003",
+    "status": "Rejected",
+    "notes": [
+      "Received rejection email"
+    ]
+  },
+  {
+    "company": "Microsoft",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-07-18",
+    "applicationLink": "https://careers.microsoft.com/jobs/2001",
+    "status": "Applied",
+    "notes": [
+      "Waiting for recruiter response"
+    ]
+  },
+  {
+    "company": "Microsoft",
+    "jobTitle": "Cloud Engineer",
+    "applicationDate": "2026-07-20",
+    "applicationLink": "https://careers.microsoft.com/jobs/2002",
+    "status": "Interview",
+    "notes": [
+      "HR interview completed"
+    ]
+  },
+  {
+    "company": "Microsoft",
+    "jobTitle": "DevOps Engineer",
+    "applicationDate": "2026-07-22",
+    "applicationLink": "https://careers.microsoft.com/jobs/2003",
+    "status": "Applied",
+    "notes": []
+  },
+  {
     "company": "Amazon",
+<<<<<<< HEAD
     "jobTitle": "Backend Developer",
     "applicationDate": "2026-07-25",
     "applicationLink": "https://www.amazon.jobs/backend-developer",
     "status": "Rejected",
     "notes": [
       "Received rejection email."
+=======
+    "jobTitle": "Cloud Engineer",
+    "applicationDate": "2026-07-25",
+    "applicationLink": "https://amazon.jobs/3001",
+    "status": "Applied",
+    "notes": [
+      "Application submitted"
+    ]
+  },
+  {
+    "company": "Amazon",
+    "jobTitle": "Backend Developer",
+    "applicationDate": "2026-07-27",
+    "applicationLink": "https://amazon.jobs/3002",
+    "status": "Interview",
+    "notes": [
+      "Phone interview passed"
+    ]
+  },
+  {
+    "company": "Amazon",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-07-28",
+    "applicationLink": "https://amazon.jobs/3003",
+    "status": "Accepted",
+    "notes": [
+      "Offer received"
+>>>>>>> git-application-details
     ]
   },
   {
     "company": "Meta",
+<<<<<<< HEAD
     "jobTitle": "Full Stack Engineer",
     "applicationDate": "2026-07-28",
     "applicationLink": "https://www.metacareers.com/jobs/full-stack-engineer",
+=======
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-07-30",
+    "applicationLink": "https://careers.meta.com/jobs/4001",
+>>>>>>> git-application-details
     "status": "Applied",
     "notes": []
   },
   {
+<<<<<<< HEAD
     "company": "Apple",
     "jobTitle": "iOS Developer",
     "applicationDate": "2026-07-30",
@@ -59,6 +152,54 @@
       "Technical interview completed.",
       "Waiting for final interview."
     ]
+=======
+    "company": "Meta",
+    "jobTitle": "Machine Learning Engineer",
+    "applicationDate": "2026-08-01",
+    "applicationLink": "https://careers.meta.com/jobs/4002",
+    "status": "Interview",
+    "notes": [
+      "Coding interview next week"
+    ]
+  },
+  {
+    "company": "IBM",
+    "jobTitle": "Cloud Engineer",
+    "applicationDate": "2026-08-02",
+    "applicationLink": "https://www.ibm.com/careers/5001",
+    "status": "Applied",
+    "notes": [
+      "Submitted via IBM Careers"
+    ]
+  },
+  {
+    "company": "IBM",
+    "jobTitle": "Data Engineer",
+    "applicationDate": "2026-08-03",
+    "applicationLink": "https://www.ibm.com/careers/5002",
+    "status": "Rejected",
+    "notes": [
+      "Position closed"
+    ]
+  },
+  {
+    "company": "Oracle",
+    "jobTitle": "Cloud Engineer",
+    "applicationDate": "2026-08-04",
+    "applicationLink": "https://careers.oracle.com/jobs/6001",
+    "status": "Interview",
+    "notes": [
+      "Manager interview pending"
+    ]
+  },
+  {
+    "company": "Oracle",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-08-05",
+    "applicationLink": "https://careers.oracle.com/jobs/6002",
+    "status": "Applied",
+    "notes": []
+>>>>>>> git-application-details
   }
  
 ]
