@@ -9,13 +9,9 @@ import { registerUpdateApplicationStatusTool } from "./tools/update-application-
 //import { registerListJobApplicationsTool } from "./tools/list-job-applications.js";
 import { registerGetApplicationStatisticsTool } from "./tools/get-application-statistics.js";
 import { registerUpdateJobApplicationDetailsTool } from "./tools/update-job-application-details.js";
-<<<<<<< HEAD
-//import { registerMarkApplicationAsFavoriteTool } from "./tools/mark-application-as-favorite.js";
-=======
 import { registerMarkApplicationAsFavoriteTool } from "./tools/mark-application-as-favorite.js";
 import { registerGetJobApplicationDetailsTool } from "./tools/get-job-application-details.js";
 
->>>>>>> git-application-details
 /**
  * Factory used by stdio so every connection gets a fresh server.
  * Register all tools inside this function.
@@ -34,12 +30,8 @@ function createServer(): McpServer {
  // registerListJobApplicationsTool(server);
   registerGetApplicationStatisticsTool(server);
   registerUpdateJobApplicationDetailsTool(server);
-<<<<<<< HEAD
-  //registerMarkApplicationAsFavoriteTool(server);
-=======
   registerMarkApplicationAsFavoriteTool(server);
   registerGetJobApplicationDetailsTool(server);
->>>>>>> git-application-details
   
 
 
