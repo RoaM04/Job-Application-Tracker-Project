@@ -22,12 +22,20 @@ export async function readJobApplications(): Promise<
   JobApplication[]
 > {
   try {
+    console.log(
+      "[readJobApplications] Reading from:",
+      DATA_FILE_PATH
+    );
+
     const fileContent = await readFileWithTimeout(
       DATA_FILE_PATH,
       1000
     );
 
     if (!fileContent.trim()) {
+      console.log(
+        "[readJobApplications] File is empty."
+      );
       return [];
     }
 
@@ -59,6 +67,18 @@ export async function readJobApplications(): Promise<
         "The job applications file contains invalid application data."
       );
     }
+
+    console.log(
+      "[readJobApplications] Loaded applications:"
+    );
+
+    console.log(
+      validationResult.data.map((application) => ({
+        company: application.company,
+        jobTitle: application.jobTitle,
+        notes: application.notes,
+      }))
+    );
 
     return validationResult.data;
   } catch (error) {
