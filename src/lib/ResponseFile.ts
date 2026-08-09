@@ -4,25 +4,29 @@ export async function readFileWithTimeout(
   filePath: string,
   timeoutMs = 1000
 ): Promise<string> {
-  let timeoutId: NodeJS.Timeout | undefined;
+  const controller = new AbortController();
+
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, timeoutMs);
 
   try {
-    return await Promise.race([
-      readFile(filePath, "utf-8"),
-
-      new Promise<never>((_, reject) => {
-        timeoutId = setTimeout(() => {
-          reject(
-            new Error(
-              `Reading the data file timed out after ${timeoutMs} ms`
-            )
-          );
-        }, timeoutMs);
-      }),
-    ]);
-  } finally {
-    if (timeoutId) {
-      clearTimeout(timeoutId);
+    return await readFile(filePath, {
+      encoding: "utf-8",
+      signal: controller.signal,
+    });
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      error.name === "AbortError"
+    ) {
+      throw new Error(
+        `Reading the data file timed out after ${timeoutMs} ms`
+      );
     }
+
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
