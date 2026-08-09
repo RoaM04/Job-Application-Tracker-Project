@@ -13,11 +13,34 @@ const DATA_DIRECTORY_PATH = path.resolve(
   "data"
 );
 
-const DATA_FILE_PATH = path.join(
-  DATA_DIRECTORY_PATH,
-  "job-applications.json"
-);
+function ensurePathInsideDataDirectory(
+  filePath: string
+): string {
+  const resolvedPath = path.resolve(filePath);
 
+  const relativePath = path.relative(
+    DATA_DIRECTORY_PATH,
+    resolvedPath
+  );
+
+  if (
+    relativePath.startsWith("..") ||
+    path.isAbsolute(relativePath)
+  ) {
+    throw new Error(
+      "Access outside the data directory is not allowed."
+    );
+  }
+
+  return resolvedPath;
+}
+
+const DATA_FILE_PATH = ensurePathInsideDataDirectory(
+  path.join(
+    DATA_DIRECTORY_PATH,
+    "job-applications.json"
+  )
+);
 export async function readJobApplications(): Promise<
   JobApplication[]
 > {

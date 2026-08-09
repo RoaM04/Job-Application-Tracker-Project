@@ -33,7 +33,13 @@ export const jobApplicationSchema = z.object({
   ]),
 
   notes: z
-    .array(z.string().trim().min(1))
+    .array(
+      z
+        .string()
+        .trim()
+        .min(1, "Note cannot be empty")
+        .max(500, "Note must not exceed 500 characters")
+    )
     .default([]),
 });
 

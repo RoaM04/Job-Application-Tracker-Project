@@ -21,11 +21,26 @@ export const addJobApplicationInputSchema = z.object({
       /^\d{4}-\d{2}-\d{2}$/,
       "Date must be in YYYY-MM-DD format"
     )
-    .describe("Date when the application was submitted (YYYY-MM-DD)"),
+    .describe(
+      "Date when the application was submitted (YYYY-MM-DD)"
+    ),
 
   applicationLink: z
-    .string() 
+    .string()
     .trim()
-    .url("Please enter a valid URL starting with http:// or https://")
-    .describe("Enter a complete link starting with https:// or http:// (e.g., https://company.com/job)"),
+    .url("Please enter a valid URL")
+    .refine(
+      (value) => {
+        const url = new URL(value);
+
+        return (
+          url.protocol === "http:" ||
+          url.protocol === "https:"
+        );
+      },
+      "Application link must use http:// or https://"
+    )
+    .describe(
+      "Enter a complete job application link starting with http:// or https://"
+    ),
 });
