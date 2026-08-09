@@ -2,63 +2,44 @@
 
 ## Assets
 
-The main assets we need to protect are:
-
-- `data/job-applications.json`, which stores all job application data.
-- Job application information such as company name, job title, application date, status, notes, and application links.
-- The local filesystem where the MCP server reads and writes data.
-- MCP tool responses returned to the model/user.
-- No API keys or authentication tokens are currently used in this project.
+- `data/job-applications.json`, which stores the job application records.
+- Job application data such as company, job title, application date, application link, status, and notes.
+- The machine's filesystem because the MCP server reads and writes a local file.
+- MCP tool responses that return job application data.
+- The project does not use API keys, authentication tokens, or external APIs.
 
 ## Trust Boundaries
 
-Untrusted input enters the system through MCP tool arguments.
-
-Main trust boundaries:
-
-- Model/User → MCP tool arguments.
-- MCP tool → Zod input validation.
-- MCP tools → `data/job-applications.json`.
-- JSON file → application code when data is read and parsed.
-- Tool → model/user through tool responses.
-
-The project currently does not communicate with external APIs or networks.
+- Model → Tool arguments: the model can send untrusted values such as company, job title, status, date, link, and notes.
+- Tool → Filesystem: the MCP tools read from and write to `data/job-applications.json`.
+- Filesystem → Tool: data read from the JSON file must not be trusted until it is parsed and validated.
+- Tool → Model: tools return stored job application data back to the model.
+- There is currently no Tool → Network boundary because the project does not use external APIs.
 
 ## Top 5 Risks
 
-### 1. Invalid or malicious tool input
-A user or model could send empty, malformed, very long, or unexpected values to a tool.
+1. **Invalid tool arguments:** Tools such as `add_job_application` may receive empty, malformed, or excessively long company names, job titles, dates, links, or notes.
 
-### 2. Path traversal / unauthorized file access
-If a file path becomes user-controlled, values such as `../` could be used to try to access files outside the project's `data` directory.
+2. **Invalid application status:** `update_application_status` may receive a status outside the statuses supported by the project, resulting in inconsistent stored data.
 
-### 3. Malformed or corrupted JSON data
-The `job-applications.json` file could become empty, malformed, or contain data that does not match the expected schema.
+3. **Corrupted or malformed data file:** `data/job-applications.json` may be empty, contain malformed JSON, or contain records that do not match the expected job application structure.
 
-### 4. Large input or data file
-Very large notes, fields, or a very large JSON file could cause slow processing or excessive memory usage.
+4. **File operation timeout or failure:** A tool may take too long or fail while reading `job-applications.json`, preventing the MCP tool from completing normally.
 
-### 5. File read/write failure
-Reading or writing the JSON file may fail or take too long, which could crash a tool or leave the application in an unexpected state.
+5. **Excessive input size:** Large values, especially application notes and other text fields, could cause unnecessary storage or processing and make tool responses larger than expected.
 
 ## Mitigations This Week
 
-### Risk 1 — Input validation
-Use Zod schemas to validate tool arguments. Required strings have minimum and maximum lengths, URLs are validated, dates follow `YYYY-MM-DD`, and status uses an allowlist:
-`Applied`, `Interview`, `Accepted`, or `Rejected`.
+1. **Zod validation:** Validate MCP tool arguments using Zod before processing them. Required fields will reject empty values, dates must follow `YYYY-MM-DD`, and application links must be valid URLs.
 
-### Risk 2 — Restrict filesystem access
-Keep the data file path controlled by the application and do not accept arbitrary file paths from tool arguments. If file paths are added later, resolve and verify that they remain inside the allowed `data` directory.
+2. **Status allowlist:** Restrict application status with a Zod enum to only `Applied`, `Interview`, `Accepted`, and `Rejected`.
 
-### Risk 3 — Validate stored JSON
-Parse the JSON safely and validate the loaded data using the `jobApplicationSchema`. Return a clean error instead of allowing invalid data to continue through the tools.
+3. **Stored-data validation:** Parse `job-applications.json` safely and validate its records with the job application Zod schema before tools use the data. Malformed or invalid data will return a clean error.
 
-### Risk 4 — Size limits
-Use maximum lengths in Zod schemas, such as 100 characters for company and job title and 500 characters for notes. Avoid returning unnecessarily large amounts of data from tools.
+4. **Read timeout and error handling:** Use `readFileWithTimeout` when reading the local data file and handle file errors with `try/catch` so tools return a clean error instead of waiting indefinitely or crashing.
 
-### Risk 5 — Safe file operations and timeout
-Use `try/catch` around file operations and return clean error messages. File reading uses `readFileWithTimeout` with a timeout to prevent a tool from waiting indefinitely.
+5. **Size caps:** Apply maximum lengths to user-controlled text fields. For example, company and job title are limited to 100 characters and notes are limited to 500 characters.
 
 ## Out of Scope
 
-This is a student project running with a local JSON file, so production-level security is outside the current scope. We are not implementing user accounts, authentication, authorization, database encryption, cloud security, or external API security. These would be necessary if the project were deployed as a real multi-user production system.
+Authentication and authorization are not included because this is a local student project without user accounts. Database security, encryption at rest, cloud security, and external API security are also out of scope because the project uses a local JSON file and does not communicate with external APIs. These protections would need to be considered if the project were deployed as a real multi-user production system.
