@@ -31,9 +31,15 @@ export function registerUpdateApplicationStatusTool(
         );
 
         if (!application) {
-          throw new Error(
-            `Job application for '${jobTitle}' at '${company}' was not found.`
-          );
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text: `Job application for '${jobTitle}' at '${company}' was not found.`,
+              },
+            ],
+          };
         }
 
         application.status = status;
@@ -59,17 +65,17 @@ export function registerUpdateApplicationStatusTool(
           ],
         };
       } catch (error) {
-        const message =
-          error instanceof Error
-            ? error.message
-            : "Failed to update the application status.";
+        console.error(
+          "[update_application_status] Failed:",
+          error
+        );
 
         return {
           isError: true,
           content: [
             {
               type: "text",
-              text: message,
+              text: "Failed to update the application status.",
             },
           ],
         };
