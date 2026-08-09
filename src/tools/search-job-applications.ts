@@ -3,6 +3,8 @@ import { McpServer } from "@modelcontextprotocol/server";
 import { searchJobApplicationsInputSchema } from "../schemas/search-job-applications.js";
 import { readJobApplications } from "../lib/job-applications-file.js";
 
+const MAX_RESULTS = 50;
+
 export function registerSearchJobApplicationsTool(
   server: McpServer
 ): void {
@@ -62,6 +64,12 @@ export function registerSearchJobApplicationsTool(
           };
         }
 
+        const limitedApplications =
+          matchingApplications.slice(
+            0,
+            MAX_RESULTS
+          );
+
         return {
           content: [
             {
@@ -70,10 +78,15 @@ export function registerSearchJobApplicationsTool(
                 {
                   message:
                     "Matching job applications retrieved successfully.",
-                  count:
+                  totalMatches:
                     matchingApplications.length,
+                  returned:
+                    limitedApplications.length,
+                  truncated:
+                    matchingApplications.length >
+                    MAX_RESULTS,
                   applications:
-                    matchingApplications,
+                    limitedApplications,
                 },
                 null,
                 2

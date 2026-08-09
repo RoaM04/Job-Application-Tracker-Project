@@ -6,7 +6,9 @@ import {
   writeJobApplications,
 } from "../lib/job-applications-file.js";
 
-export function registerAddJobApplicationTool(server: McpServer): void {
+export function registerAddJobApplicationTool(
+  server: McpServer
+): void {
   server.registerTool(
     "add_job_application",
     {
@@ -14,20 +16,34 @@ export function registerAddJobApplicationTool(server: McpServer): void {
         "Add a new job application to the Job Application Tracker.",
       inputSchema: addJobApplicationInputSchema,
     },
-    async ({ company, jobTitle, applicationDate, applicationLink }) => {
-       try {
-        const applications = await readJobApplications();
+    async ({
+      company,
+      jobTitle,
+      applicationDate,
+      applicationLink,
+    }) => {
+      try {
+        const applications =
+          await readJobApplications();
 
-        const normalizedCompany = company.trim();
-        const normalizedJobTitle = jobTitle.trim();
+        const normalizedCompany =
+          company.trim();
 
-        const duplicateApplication = applications.find(
-          (application) =>
-            application.company.toLowerCase() ===
-              normalizedCompany.toLowerCase() &&
-            application.jobTitle.toLowerCase() ===
-              normalizedJobTitle.toLowerCase()
-        );
+        const normalizedJobTitle =
+          jobTitle.trim();
+
+        const duplicateApplication =
+          applications.find(
+            (application) =>
+              application.company
+                .trim()
+                .toLowerCase() ===
+                normalizedCompany.toLowerCase() &&
+              application.jobTitle
+                .trim()
+                .toLowerCase() ===
+                normalizedJobTitle.toLowerCase()
+          );
 
         if (duplicateApplication) {
           return {
@@ -48,14 +64,17 @@ Job Title: ${normalizedJobTitle}`,
           company: normalizedCompany,
           jobTitle: normalizedJobTitle,
           applicationDate,
-          applicationLink: applicationLink.trim(),
+          applicationLink:
+            applicationLink.trim(),
           status: "Applied" as const,
           notes: [],
         };
 
         applications.push(newApplication);
 
-        await writeJobApplications(applications);
+        await writeJobApplications(
+          applications
+        );
 
         return {
           content: [
@@ -76,20 +95,20 @@ Status: ${newApplication.status}`,
           "[add_job_application] Failed:",
           error
         );
-      return {
-        content: [
-          {
-            type: "text",
-            text: `Job application added successfully.
 
-Company: ${company}
-Job Title: ${jobTitle}
-Application Date: ${applicationDate}
-Application Link: ${applicationLink}`,
-          },
-        ],
-      };
-    }
+        return {
+          isError: true,
+          content: [
+            {
+              type: "text",
+              text:
+                error instanceof Error
+                  ? error.message
+                  : "Unable to add the job application.",
+            },
+          ],
+        };
+      }
     }
   );
 }

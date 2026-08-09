@@ -30,9 +30,9 @@ export function registerUpdateJobApplicationDetailsTool(
 
         const applicationIndex = applications.findIndex(
           (application) =>
-            application.company.toLowerCase() ===
+            application.company.trim().toLowerCase() ===
               company.trim().toLowerCase() &&
-            application.jobTitle.toLowerCase() ===
+            application.jobTitle.trim().toLowerCase() ===
               jobTitle.trim().toLowerCase()
         );
 
@@ -74,15 +74,19 @@ Job Title: ${jobTitle}`,
 
         const updatedApplication = {
           ...currentApplication,
+
           company:
             newCompany?.trim() ??
             currentApplication.company,
+
           jobTitle:
             newJobTitle?.trim() ??
             currentApplication.jobTitle,
+
           applicationDate:
             newApplicationDate ??
             currentApplication.applicationDate,
+
           applicationLink:
             newApplicationLink?.trim() ??
             currentApplication.applicationLink,
@@ -92,10 +96,18 @@ Job Title: ${jobTitle}`,
           applications.some(
             (application, index) =>
               index !== applicationIndex &&
-              application.company.toLowerCase() ===
-                updatedApplication.company.toLowerCase() &&
-              application.jobTitle.toLowerCase() ===
-                updatedApplication.jobTitle.toLowerCase()
+              application.company
+                .trim()
+                .toLowerCase() ===
+                updatedApplication.company
+                  .trim()
+                  .toLowerCase() &&
+              application.jobTitle
+                .trim()
+                .toLowerCase() ===
+                updatedApplication.jobTitle
+                  .trim()
+                  .toLowerCase()
           );
 
         if (duplicateApplication) {
