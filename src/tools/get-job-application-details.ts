@@ -3,6 +3,8 @@ import { McpServer } from "@modelcontextprotocol/server";
 import { getJobApplicationDetailsInputSchema } from "../schemas/get-job-application-details.js";
 import { readJobApplications } from "../lib/job-applications-file.js";
 
+const MAX_RESULTS = 100;
+
 export function registerGetJobApplicationDetailsTool(
   server: McpServer
 ): void {
@@ -18,20 +20,25 @@ export function registerGetJobApplicationDetailsTool(
       try {
         const applications = await readJobApplications();
 
-        const normalizedCompany = company?.trim().toLowerCase();
-        const normalizedJobTitle = jobTitle?.trim().toLowerCase();
+        const normalizedCompany =
+          company?.trim().toLowerCase();
+
+        const normalizedJobTitle =
+          jobTitle?.trim().toLowerCase();
 
         const matchingApplications = applications.filter(
           (application) => {
             const companyMatches =
               normalizedCompany === undefined ||
-              application.company.trim().toLowerCase() ===
-                normalizedCompany;
+              application.company
+                .trim()
+                .toLowerCase() === normalizedCompany;
 
             const jobTitleMatches =
               normalizedJobTitle === undefined ||
-              application.jobTitle.trim().toLowerCase() ===
-                normalizedJobTitle;
+              application.jobTitle
+                .trim()
+                .toLowerCase() === normalizedJobTitle;
 
             return companyMatches && jobTitleMatches;
           }
@@ -50,15 +57,28 @@ export function registerGetJobApplicationDetailsTool(
           );
         }
 
+        const limitedApplications =
+          matchingApplications.slice(0, MAX_RESULTS);
+
+        const truncated =
+          matchingApplications.length > MAX_RESULTS;
+
         return {
           content: [
             {
               type: "text",
               text: JSON.stringify(
                 {
-                  message: `${matchingApplications.length} matching job application(s) found.`,
-                  count: matchingApplications.length,
-                  applications: matchingApplications,
+                  message: truncated
+                    ? `${matchingApplications.length} matching job application(s) found. Returning the first ${MAX_RESULTS}.`
+                    : `${matchingApplications.length} matching job application(s) found.`,
+                  totalMatches:
+                    matchingApplications.length,
+                  returned:
+                    limitedApplications.length,
+                  truncated,
+                  applications:
+                    limitedApplications,
                 },
                 null,
                 2
