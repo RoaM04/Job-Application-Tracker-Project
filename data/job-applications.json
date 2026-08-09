@@ -2,22 +2,12 @@
   {
     "company": "Google",
     "jobTitle": "Software Engineer",
-    "applicationDate": "2026-07-20",
-    "applicationLink": "https://careers.google.com/jobs/software-engineer",
-    "status": "Applied",
+    "applicationDate": "2026-07-10",
+    "applicationLink": "https://careers.google.com/jobs/1001",
+    "status": "Interview",
     "notes": [
-      "Submitted through Google Careers.",
-      "Waiting for recruiter response."
-    ]
-  },
-  {
-    "company": "Microsoft",
-    "jobTitle": "Backend Developer",
-    "applicationDate": "2026-07-18",
-    "applicationLink": "https://careers.microsoft.com/jobs/67890",
-    "status": "Accepted",
-    "notes": [
-      "First interview scheduled for August 10."
+      "Completed OA",
+      "Technical interview scheduled"
     ]
   },
   {
@@ -154,5 +144,4 @@
     "status": "Applied",
     "notes": []
   }
- 
 ]
