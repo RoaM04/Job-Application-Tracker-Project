@@ -45,17 +45,16 @@ export function registerGetJobApplicationDetailsTool(
         );
 
         if (matchingApplications.length === 0) {
-          const searchDescription =
-            company && jobTitle
-              ? `company "${company}" and job title "${jobTitle}"`
-              : company
-                ? `company "${company}"`
-                : `job title "${jobTitle}"`;
-
-          throw new Error(
-            `No job application found for ${searchDescription}.`
-          );
-        }
+  return {
+    isError: true,
+    content: [
+      {
+        type: "text",
+        text: "No matching job application was found.",
+      },
+    ],
+  };
+}
 
         const limitedApplications =
           matchingApplications.slice(0, MAX_RESULTS);
