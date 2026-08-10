@@ -30,10 +30,16 @@ export function registerDeleteJobApplicationTool(
         );
 
         if (applicationIndex === -1) {
-          throw new Error(
-            `No job application was found for ${company} - ${jobTitle}.`
-          );
-        }
+          return {
+            isError: true,
+            content: [
+            {
+              type: "text",
+              text: "No matching job application was found.",
+      },
+    ],
+  };
+}
 
         const [deletedApplication] = applications.splice(
           applicationIndex,
