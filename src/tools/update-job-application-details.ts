@@ -155,10 +155,7 @@ Job Title: ${jobTitle}`,
           content: [
             {
               type: "text",
-              text:
-                error instanceof Error
-                  ? error.message
-                  : "Unable to update the job application details.",
+              text: "Unable to update the job application details. Please try again.",
             },
           ],
         };

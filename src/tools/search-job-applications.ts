@@ -105,10 +105,7 @@ export function registerSearchJobApplicationsTool(
           content: [
             {
               type: "text",
-              text:
-                error instanceof Error
-                  ? error.message
-                  : "Unable to search job applications.",
+              text: "Unable to search job applications. Please try again.",
             },
           ],
         };
