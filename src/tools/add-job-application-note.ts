@@ -34,9 +34,15 @@ export function registerAddJobApplicationNoteTool(
         );
 
         if (!application) {
-          throw new Error(
-            `No job application was found for ${company} - ${jobTitle}.`
-          );
+          return {
+            isError: true,
+            content: [
+              {
+              type: "text",
+              text: "No matching job application was found.",
+      },
+    ],
+  };
         }
 
         const trimmedNote = note.trim();
