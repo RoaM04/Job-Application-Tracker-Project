@@ -90,25 +90,22 @@ Status: ${newApplication.status}`,
             },
           ],
         };
-      } catch (error) {
-        console.error(
-          "[add_job_application] Failed:",
-          error
-        );
+      }  catch (error) {
+  console.error(
+    "[add_job_application] Failed:",
+    error
+  );
 
-        return {
-          isError: true,
-          content: [
-            {
-              type: "text",
-              text:
-                error instanceof Error
-                  ? error.message
-                  : "Unable to add the job application.",
-            },
-          ],
-        };
-      }
+  return {
+    isError: true,
+    content: [
+      {
+        type: "text",
+        text: "Unable to add the job application. Please try again.",
+      },
+    ],
+  };
+}
     }
   );
 }
