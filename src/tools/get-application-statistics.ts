@@ -57,7 +57,10 @@ export function registerGetApplicationStatisticsTool(
           content: [
             {
               type: "text",
-             text: "Unable to generate application statistics. Please try again.",
+              text:
+                error instanceof Error
+                  ? error.message
+                  : "Unable to generate application statistics.",
             },
           ],
         };

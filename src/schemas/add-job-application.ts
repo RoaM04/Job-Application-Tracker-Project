@@ -16,22 +16,14 @@ export const addJobApplicationInputSchema = z.object({
     .describe("Title of the job position"),
 
   applicationDate: z
-  .string()
-  .regex(
-    /^\d{4}-\d{2}-\d{2}$/,
-    "Date must be in YYYY-MM-DD format"
-  )
-  .refine(
-    (value) => {
-      const date = new Date(`${value}T00:00:00Z`);
-      return !Number.isNaN(date.getTime()) &&
-        date.toISOString().startsWith(value);
-    },
-    "Application date must be a valid calendar date"
-  )
-  .describe(
-    "Date when the application was submitted (YYYY-MM-DD)"
-  ),
+    .string()
+    .regex(
+      /^\d{4}-\d{2}-\d{2}$/,
+      "Date must be in YYYY-MM-DD format"
+    )
+    .describe(
+      "Date when the application was submitted (YYYY-MM-DD)"
+    ),
 
   applicationLink: z
     .string()
