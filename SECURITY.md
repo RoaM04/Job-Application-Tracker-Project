@@ -32,3 +32,4 @@ The Delete Job Application tool includes the following protections:
 * **Case normalization:** Company names and job titles are compared case-insensitively.
 * **Controlled errors:** Missing applications return a short error message instead of exposing internal details.
 * **Safe file handling:** The tool uses the existing validated file read/write helpers.
+* **Ambiguous match protection:** If multiple applications have the same company name and job title, deletion is refused to prevent deleting the wrong application.
