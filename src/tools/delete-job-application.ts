@@ -14,11 +14,23 @@ export function registerDeleteJobApplicationTool(
     {
       title: "Delete Job Application",
       description:
-        "Delete a saved job application using the company name and job title.",
+        "Delete a saved job application using the company name and job title. Deletion requires explicit confirmation. If multiple applications match, deletion is refused to prevent ambiguous deletion.",
       inputSchema: deleteJobApplicationInputSchema,
     },
-    async ({ company, jobTitle }) => {
+    async ({ company, jobTitle, confirm }) => {
       try {
+        if (!confirm) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text: "Deletion was not performed. Explicit confirmation is required.",
+              },
+            ],
+          };
+        }
+
         const applications = await readJobApplications();
 
         const matchingApplications = applications
@@ -40,7 +52,7 @@ export function registerDeleteJobApplicationTool(
             content: [
               {
                 type: "text",
-                text: "No matching job application was found.",
+                text: `No job application was found for '${jobTitle}' at '${company}'.`,
               },
             ],
           };

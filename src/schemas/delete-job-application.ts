@@ -6,12 +6,16 @@ export const deleteJobApplicationInputSchema = z.object({
     .trim()
     .min(1, "Company name is required")
     .max(100, "Company name must not exceed 100 characters")
-    .describe("Full name of the company for the application to delete"),
+    .describe("Company name of the job application to delete"),
 
   jobTitle: z
     .string()
     .trim()
     .min(1, "Job title is required")
     .max(100, "Job title must not exceed 100 characters")
-    .describe("Full job title of the application to delete"),
+    .describe("Job title of the application to delete"),
+
+  confirm: z
+    .boolean()
+    .describe("Must be true to confirm permanent deletion of the job application"),
 });
