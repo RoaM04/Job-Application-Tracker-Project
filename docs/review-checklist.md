@@ -506,6 +506,25 @@ The follow-up test confirmed that both concurrent operations persisted their cha
 
 **Fixed.**
 ---
+## Finding #4 — Duplicate Empty Date Validation Messages
+
+An empty `applicationDate` originally produced two validation messages for the same field:
+
+* Date format validation
+* Calendar validity validation
+
+### Issue
+
+The validation response was unnecessarily duplicated, making the error message less clear.
+
+### Fix
+
+The date validation was rewritten using `superRefine` so that the relevant validation failure is reported clearly without producing duplicate messages for the same invalid input.
+
+### Status
+
+**Fixed.**
+
 
 ## Finding #5 — Empty Application Link Message
 
@@ -576,11 +595,27 @@ The generic error-handling behavior was **not a review-driven change**. It was a
 
 ### Concurrency Verification Note
 
-The original lost-update behavior reported by Marwa could not be independently reproduced during follow-up testing. Two concurrent requests were executed through MCP Inspector and both applications were correctly saved in `data/job-applications.json`.
+The original lost-update behavior reported by Marwa could not be independently reproduced during follow-up verification.
 
-The in-memory write lock was retained as a defensive mitigation because the underlying operation uses a read-check-write sequence and the reported behavior represents a potential concurrency risk.
+After adding the in-memory write lock, a dedicated test script named `scripts/concurrency-test.ts` was created under the `scripts` directory.
 
----
+The script executes two concurrent add operations using `Promise.all()` and introduces an artificial 500 ms delay inside the locked section to make the concurrency behavior observable.
+
+The test was executed with:
+
+`npx tsx scripts/concurrency-test.ts`
+
+The output showed that the two operations acquired the lock sequentially. `Concurrency-Test-A` acquired the lock first, read 16 applications, and wrote 17 applications. `Concurrency-Test-B` then acquired the lock, read 17 applications, and wrote 18 applications.
+
+The final verification confirmed that both test applications were present in `data/job-applications.json`:
+
+* `Concurrency-Test-A — Software Engineer A`
+* `Concurrency-Test-B — Software Engineer B`
+
+Both operations completed successfully, and no update was lost during the follow-up test.
+
+The in-memory write lock was retained as a defensive mitigation because the underlying operation uses a shared read-check-write sequence and the originally reported behavior represented a potential concurrency risk.
+
 
 # Submission Package
 
