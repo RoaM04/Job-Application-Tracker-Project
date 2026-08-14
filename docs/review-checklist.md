@@ -504,7 +504,7 @@ An in-memory write lock was added around the complete read-check-write operation
 
 The follow-up test confirmed that both concurrent operations persisted their changes successfully after the write lock was implemented.
 
-**Fixed.**
+
 ---
 ## Finding #4 — Duplicate Empty Date Validation Messages
 
@@ -570,9 +570,8 @@ The reviewers confirmed that:
 | Verify duplicate protection through MCP Inspector                | Shaymaa Dar Taha | End of Week 4     | Completed                               |
 | Verify `javascript:` and `file:` rejection through MCP Inspector | Shaymaa Dar Taha | End of Week 4     | Completed                               |
 | Re-test concurrent requests after concurrency mitigation         | Shaymaa Dar Taha | End of Week 4     | Completed — both applications persisted |
-| Verify README and demo path                                      | Shaymaa Dar Taha | Before submission | Pending final confirmation              |
-| Verify SECURITY.md                                               | Shaymaa Dar Taha | Before submission | Pending final confirmation              |
-
+| Verify README and demo path                                      | Shaymaa Dar Taha | Before submission | Completed — verified                    |
+| Verify SECURITY.md                                               | Shaymaa Dar Taha | Before submission | Completed — verified                    |
 ---
 
 # Follow-Up Changes
@@ -638,7 +637,7 @@ The in-memory write lock was retained as a defensive mitigation because the unde
 
    * Figures 1–4: Date validation
    * Figures 5–10: Empty date and empty link validation
-
+8. README/demo path and `SECURITY.md` verified before submission.
 ---
 
 # Final Review Result
@@ -662,4 +661,6 @@ The review evidence includes the reviewers' tool names, inputs, observed server 
 
 No unresolved P0 or must-fix issue remains based on the peer review and follow-up verification.
 
-The checklist is ready for Week 4 submission once the README/demo path, `SECURITY.md`, and peer email screenshots have been finally confirmed and attached.
+The README/demo path and `SECURITY.md` were verified, and the required peer email screenshots were confirmed and attached to the submission package.
+
+The checklist is ready for Week 4 submission.
