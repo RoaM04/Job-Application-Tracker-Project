@@ -31,7 +31,7 @@ The `add_job_application` tool applies the following security controls:
 
 - [x] Input strings are trimmed and capped at 100 characters.
 - [x] Company and job title fields cannot be empty.
-- [x] Application dates must use `YYYY-MM-DD` format.
+- [x] Application dates must use `YYYY-MM-DD` format and a year between `1900` and `2100`.
 - [x] Application links are restricted to `http://` and `https://`.
 - [x] Application data is validated before being written.
 - [x] Stored application data is validated before being returned.
