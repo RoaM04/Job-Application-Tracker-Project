@@ -45,7 +45,7 @@ The `add_job_application` tool applies the following security controls:
 
 ### `delete_job_application`
 
-The Delete Job Application tool includes the following protections:
+The `delete_job_application` tool includes the following protections:
 
 - [x] Input validation: `company` and `jobTitle` are required and limited to 100 characters.
 - [x] Input trimming: Leading and trailing whitespace is removed before processing.
@@ -53,3 +53,19 @@ The Delete Job Application tool includes the following protections:
 - [x] Controlled errors: Missing applications return a short error message instead of exposing internal details.
 - [x] Safe file handling: The tool uses the existing validated file read/write helpers.
 - [x] Ambiguous match protection: If multiple applications have the same company name and job title, deletion is refused to prevent deleting the wrong application.
+
+### `update_application_status`
+
+The `update_application_status` tool applies the following security controls:
+
+- [x] Input strings are trimmed and capped at 100 characters.
+- [x] Company and job title fields are required.
+- [x] Status values are restricted to the allowed application statuses.
+- [x] Application data is validated before being updated.
+- [x] Stored application data is validated before being returned.
+- [x] File access is restricted to the data directory.
+- [x] Reading the data file has a timeout.
+- [x] Empty data files are handled safely.
+- [x] Invalid JSON is rejected.
+- [x] Invalid application data is rejected.
+- [x] Tool errors return short, user-safe messages without exposing internal details.
