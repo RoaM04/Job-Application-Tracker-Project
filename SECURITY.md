@@ -2,34 +2,54 @@
 
 ## Supported Versions
 
-This repository is currently under active development.
+This repository currently supports the latest version on the `main` branch.
 
 | Version | Supported |
 | ------- | --------- |
-| 0.1.x   | Yes       |
+| main    | Yes       |
 
-## Reporting a Vulnerability
+## Reporting a Security Issue
 
-If you find a security issue in this repository, please report it privately to the project mentor:
+Please report security issues privately to the project mentor by email:
 
-**[Mjaradat@nextflows.ai](mailto:Mjaradat@nextflows.ai)**
+Mjaradat@nextflows.ai
 
-Please include:
+Do not open a public issue for security vulnerabilities.
 
-* A short description of the issue
-* Steps to reproduce it
-* The affected tool or file
-* Any relevant screenshots or error messages
+When reporting an issue, include:
 
-Please do not publicly disclose the issue before it has been reviewed.
+- A short description of the issue
+- Steps to reproduce it
+- The affected tool or input
+- Any relevant screenshots or error messages
 
-## Delete Tool Security Hardening
+## Security Controls
+
+### `add_job_application`
+
+The `add_job_application` tool applies the following security controls:
+
+- [x] Input strings are trimmed and capped at 100 characters.
+- [x] Company and job title fields cannot be empty.
+- [x] Application dates must use `YYYY-MM-DD` format.
+- [x] Application links are restricted to `http://` and `https://`.
+- [x] Application data is validated before being written.
+- [x] Stored application data is validated before being returned.
+- [x] Duplicate job applications are rejected.
+- [x] File access is restricted to the data directory.
+- [x] Reading the data file has a 1-second timeout.
+- [x] Empty data files are handled safely.
+- [x] Invalid JSON is rejected.
+- [x] Invalid application data is rejected.
+- [x] Tool errors return short, user-safe messages.
+
+### `delete_job_application`
 
 The Delete Job Application tool includes the following protections:
 
-* **Input validation:** `company` and `jobTitle` are required and limited to 100 characters.
-* **Input trimming:** Leading and trailing whitespace is removed before processing.
-* **Case normalization:** Company names and job titles are compared case-insensitively.
-* **Controlled errors:** Missing applications return a short error message instead of exposing internal details.
-* **Safe file handling:** The tool uses the existing validated file read/write helpers.
-* **Ambiguous match protection:** If multiple applications have the same company name and job title, deletion is refused to prevent deleting the wrong application.
+- [x] Input validation: `company` and `jobTitle` are required and limited to 100 characters.
+- [x] Input trimming: Leading and trailing whitespace is removed before processing.
+- [x] Case normalization: Company names and job titles are compared case-insensitively.
+- [x] Controlled errors: Missing applications return a short error message instead of exposing internal details.
+- [x] Safe file handling: The tool uses the existing validated file read/write helpers.
+- [x] Ambiguous match protection: If multiple applications have the same company name and job title, deletion is refused to prevent deleting the wrong application.
