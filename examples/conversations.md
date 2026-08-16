@@ -115,14 +115,99 @@ You have one job application with Microsoft. It is for a Software Engineer posit
 
 ## Shaymaa
 
-### Conversation A
+### Conversation A — Add a Job Application
 
-...
+**User prompt:**
 
-### Conversation B
+Add a Cloud Engineer application at IBM. I applied on August 2, 2026, and the application link is https://www.ibm.com/careers/5001.
 
-...
+**Expected tool call:**
 
-### Conversation C
+`add_job_application`
+
+**Key arguments:**
+
+```json
+{
+  "company": "IBM",
+  "jobTitle": "Cloud Engineer",
+  "applicationDate": "2026-08-02",
+  "applicationLink": "https://www.ibm.com/careers/5001",
+  "status": "Applied"
+}
+```
+
+**Good final answer:**
+
+Your IBM Cloud Engineer job application was added successfully.
+
+---
+
+### Conversation B — Add a Job Application with a Note
+
+**User prompt:**
+
+Add my Software Engineer application at Microsoft. I applied on July 18, 2026, and add a note saying "Waiting for recruiter response."
+
+**Expected tool calls:**
+
+1. `add_job_application`
+
+**Key arguments:**
+
+```json
+{
+  "company": "Microsoft",
+  "jobTitle": "Software Engineer",
+  "applicationDate": "2026-07-18",
+  "applicationLink": "https://careers.microsoft.com/jobs/2001",
+  "status": "Applied"
+}
+```
+
+**Good final answer:**
+
+Your Microsoft Software Engineer application was added successfully.
+
+---
+
+### Conversation C — Add and Check a Job Application
+
+**User prompt:**
+
+Add my Backend Developer application at Amazon. I applied on August 5, 2026, with the status Applied.
+
+**Expected tool calls:**
+
+1. `add_job_application`
+2. `get_job_application_details`
+
+**Key arguments:**
+
+**Tool call 1 — `add_job_application`:**
+
+```json
+{
+  "company": "Amazon",
+  "jobTitle": "Backend Developer",
+  "applicationDate": "2026-08-05",
+  "applicationLink": "https://www.amazon.jobs/en/",
+  "status": "Applied"
+}
+```
+
+**Tool call 2 — `get_job_application_details`:**
+
+```json
+{
+  "company": "Amazon",
+  "jobTitle": "Backend Developer"
+}
+```
+
+**Good final answer:**
+
+Your Amazon Backend Developer application was added successfully. It is currently marked as Applied.
+
 
 ...
