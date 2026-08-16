@@ -41,6 +41,6 @@ For the empty-data test, temporarily set the fixture to:
 []
 ```
 
-After completing TC-07, restore the normal fixture data.
+After completing TC-08, restore the normal fixture data.
 
 The `result` and `evidence` columns for the remaining tests will be completed during the manual test execution.
