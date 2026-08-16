@@ -96,22 +96,92 @@ Give me the full information about all job applications with Microsoft.
 You have one job application with Microsoft. It is for a Software Engineer position, applied on July 18, 2026, and its current status is Applied. The application includes a note saying "Waiting for recruiter response."
 
 ---
-
 ## Marwa
 
-### Conversation A
+### Conversation A — Update Application Status
 
-...
+**User prompt:**
 
-### Conversation B
+Update my Google Cloud Engineer application status from Applied to Interview.
 
-...
+**Expected tool call:**
 
-### Conversation C
+`update_application_status`
 
-...
+**Key arguments:**
+
+```json
+{
+  "company": "Google",
+  "jobTitle": "Cloud Engineer",
+  "status": "Interview"
+}
+```
+
+**Good final answer:**
+
+Your Google Cloud Engineer application status was updated successfully to Interview.
 
 ---
+
+### Conversation B — List Job Applications
+
+**User prompt:**
+
+Show me all my current job applications and their statuses.
+
+**Expected tool call:**
+
+`list_job_applications`
+
+**Key arguments:**
+
+```json
+{}
+```
+
+**Good final answer:**
+
+Here are your current job applications and their statuses.
+
+---
+
+### Conversation C — Update and List Applications
+
+**User prompt:**
+
+Update my Amazon Backend Developer application status to Rejected, then show me my current job applications.
+
+**Expected tool calls:**
+
+1. `update_application_status`
+2. `list_job_applications`
+
+**Key arguments:**
+
+**Tool call 1 — `update_application_status`:**
+
+```json
+{
+  "company": "Amazon",
+  "jobTitle": "Backend Developer",
+  "status": "Rejected"
+}
+```
+
+**Tool call 2 — `list_job_applications`:**
+
+```json
+{}
+```
+
+**Good final answer:**
+
+Your Amazon Backend Developer application status was updated to Rejected. Here is your current list of job applications.
+
+---
+
+
 
 ## Shaymaa
 
