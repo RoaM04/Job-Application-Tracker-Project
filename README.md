@@ -1,167 +1,184 @@
-# MCPRepo — NextFlows Academy Starter
+# Job Application Tracker MCP
 
-> Part of **[NextFlows Academy](https://nextflows.ai/academy)** — the free cohort program **Building an MCP for an AI Engine**.
+A local Model Context Protocol (MCP) server for managing job applications. The server allows an AI assistant to add, delete, search, update, and manage job application data stored in a local JSON file.
 
-Clone this repo to build your **Model Context Protocol (MCP)** server in TypeScript. By Demo Day you will ship a public GitHub repo with real tools, Zod validation, docs, and a live demo — the same path used in the free NextFlows Academy cohort.
+The project works offline and does not require paid APIs or authentication.
 
-**Program hub:** [nextflows.ai/academy](https://nextflows.ai/academy)  
-**Full program page (in this repo):** [`docs/PROGRAM.md`](docs/PROGRAM.md)  
-**Apply:** [Cohort application](https://nextflows.ai/academy/apply?cohort=1&program=building-mcp-ai-engines)
+## Requirements
 
----
+Before running the project, make sure you have:
 
-## About NextFlows Academy
+* Node.js 20 or later
+* npm
+* Git
+* VS Code or another code editor
+* MCP Inspector for testing the server
 
-[NextFlows Academy](https://nextflows.ai/academy) runs structured, cohort-based programs with live sessions, mentor support, and a real project you ship by the end.
-
-This repository belongs to:
-
-| | |
-| --- | --- |
-| **Program** | Building an MCP for an AI Engine |
-| **Audience** | 4th & 5th year CS / CE students |
-| **Duration** | 6 weeks |
-| **Format** | Cohort + project |
-| **Price** | Free |
-| **Level** | Intermediate |
-| **Outcome** | Shipped MCP server on GitHub |
-| **Schedule** | Wed & Sat online 1:30–3:30 PM + Monday on-site workshop days |
-
-You go from “what’s an MCP?” to a working MCP server connected to an AI engine (for example Claude), fully documented, and live on GitHub.
-
-See [`docs/PROGRAM.md`](docs/PROGRAM.md) for outcomes, weekly plan, starter projects, and who it’s for.
-
----
-
-## What you get
-
-| Path | Purpose |
-| --- | --- |
-| `src/index.ts` | MCP server + stdio transport |
-| `src/tools/` | One register helper per tool |
-| `src/schemas/` | Zod input contracts (with `.describe(...)`) |
-| `examples/` | Sample JSON args for Inspector |
-| `docs/PROGRAM.md` | Full NextFlows Academy program page |
-| `docs/WEEK-2.md` | Full Week 2 step-by-step plan |
-| `docs/CURRICULUM.md` | 6-week overview |
-| `docs/project-choice.md` | Week 2 project choice template |
-| `docs/design.md` | Week 2 design doc template |
-
-**Week 1 is already wired:** a working `greet` tool so you can open Inspector on day one.
-
-**Week 2 examples included:** stub tools for *Notes & FAQ Search* (`search_notes`, `list_notes`, `add_note`). Enable them when you pick that starter (or copy the pattern for your own idea).
-
-## Prerequisites
-
-- Node.js **20+** (`node -v`)
-- npm (`npm -v`)
-- Git + a GitHub account
-- Cursor or VS Code
-
-## Quick start
+Check your Node.js and npm versions:
 
 ```bash
-git clone <YOUR_FORK_OR_ORG_URL>/MCPRepo.git
-cd MCPRepo
-npm install
-npm run inspect
+node -v
+npm -v
 ```
 
-In the Inspector browser tab:
+## Install
 
-1. Click **Connect**
-2. Open **Tools**
-3. Select `greet` and put `Alex` in the **name** field (see `examples/greet.json` for the full args shape)
-4. Try invalid input (empty name) and confirm Zod rejects it
+Clone the repository:
 
-To run the server alone (waits on stdin):
+```bash
+git clone https://github.com/RoaM04/Job-Application-Tracker-Project.git
+```
+
+Move into the project folder:
+
+```bash
+cd Job-Application-Tracker-Project
+```
+
+Install the dependencies:
+
+```bash
+npm install
+```
+
+## Run
+
+Start the MCP server with:
 
 ```bash
 npm run dev
 ```
 
-> **Important:** log only with `console.error`. Never use `console.log` — stdout is reserved for the MCP protocol.
+The server runs using the stdio transport and waits for MCP requests.
 
-## Week 2
-
-Week 2 is design-first. Follow [`docs/WEEK-2.md`](docs/WEEK-2.md).
-
-Useful scripts:
-
-| Script | What it does |
-| --- | --- |
-| `npm run dev` | Start the MCP server on stdio (stays alive; stop with Ctrl+C) |
-| `npm start` | Same as `dev` |
-| `npm run inspect` | Open MCP Inspector against this server |
-
-## Stack
-
-- TypeScript via `tsx` (no build step early on)
-- Official MCP TypeScript SDK (`@modelcontextprotocol/server`)
-- Zod for tool `inputSchema`
-- [MCP Inspector](https://github.com/modelcontextprotocol/inspector) for local testing
-- stdio transport for Claude Desktop / Cursor demos
-
-## Six-week journey
-
-| Week | Focus |
-| --- | --- |
-| 1 | Set up & first MCP tool (`greet` ✅ in this repo) |
-| 2 | Design your own tools → see [`docs/WEEK-2.md`](docs/WEEK-2.md) |
-| 3 | Connect tools to real data |
-| 4 | Make it safe & reliable |
-| 5 | Test & write docs people can follow |
-| 6 | Ship on GitHub & Demo Day |
-
-Full program details: [`docs/PROGRAM.md`](docs/PROGRAM.md)
-
-## Starter project options (pick in Week 2)
-
-1. **Notes & FAQ Search** — fully offline (example stubs included)
-2. **Personal Expense Tracker** — summarize spending from a spreadsheet
-3. **To-Do List** — create / list / complete tasks
-4. **Weather Briefing** — free API (e.g. Open-Meteo), no paid keys
-5. **Quote of the Day** — simple offline or public API
-
-Advanced ideas (repo health, course planner, job tracker) need **mentor approval** before you expand scope.
-
-## Repo layout after Week 2
+You should see:
 
 ```text
-MCPRepo/
-├── docs/
-│   ├── PROGRAM.md
-│   ├── CURRICULUM.md
-│   ├── WEEK-2.md
-│   ├── project-choice.md
-│   └── design.md
-├── examples/
-│   └── <tool_name>.json
-├── src/
-│   ├── index.ts
-│   ├── schemas/
-│   └── tools/
-├── package.json
-└── README.md
+Job Application Tracker MCP server running on stdio
 ```
 
-## Rules that matter
+Keep the terminal running while using MCP Inspector.
 
-- One job per tool; use `verb_noun` names (`search_notes`, `add_expense`)
-- Write descriptions for the **model**, not only for humans
-- Every Zod field needs `.describe(...)`
-- Prefer small focused tools over one mega-tool with an `action` enum
-- Avoid paid APIs / OAuth-heavy projects in Weeks 1–2
+## MCP Inspector
 
-## Links
+To test the server with MCP Inspector, run:
 
-- [NextFlows Academy](https://nextflows.ai/academy)
-- [Program page (this repo)](docs/PROGRAM.md)
-- [Apply for Cohort #1](https://nextflows.ai/academy/apply?cohort=1&program=building-mcp-ai-engines)
-- [MCP docs](https://modelcontextprotocol.io/docs)
-- [MCP specification](https://modelcontextprotocol.io/specification/latest)
-- [Build your first server (TypeScript SDK)](https://ts.sdk.modelcontextprotocol.io/v2/get-started/first-server.html)
+```bash
+npm run inspect
+```
+
+Open the Inspector interface, connect to the server, and select **Tools**.
+
+Choose one of the available tools and provide the required input.
+
+The project stores its data in:
+
+```text
+data/job-applications.json
+```
+
+The `examples/` directory contains example JSON inputs that can be reused when testing tools.
+
+## Tools
+
+| Tool                                | Description                                                    |
+| ----------------------------------- | -------------------------------------------------------------- |
+| `add_job_application`               | Adds a new job application to the local JSON data file.        |
+| `delete_job_application`            | Deletes an existing job application after confirmation.        |
+| `update_application_status`         | Updates the status of an existing job application.             |
+| `search_job_applications`           | Searches job applications using the available search criteria. |
+| `add_job_application_note`          | Adds a note to an existing job application.                    |
+| `remove_job_application_note`       | Removes a note from an existing job application.               |
+| `list_job_applications`             | Lists stored job applications.                                 |
+| `get_application_statistics`        | Returns statistics about the stored job applications.          |
+| `update_job_application_details`    | Updates details of an existing job application.                |
+| `get_job_application_details`       | Retrieves full details of job applications by company, job title, or both.              |
+| `search_applications_by_date_range` | Searches applications within a specified date range.           |
+
+All application data is stored locally in:
+
+```text
+data/job-applications.json
+```
+
+No external API or authentication is required.
+
+## Example Prompts
+
+These are examples of requests that can be used with an AI assistant connected to the MCP server:
+
+```text
+Add a job application for Google for a Software Engineer position.
+```
+
+```text
+Delete my Google Software Engineer application.
+```
+
+```text
+Update the status of my Google Software Engineer application to Interview.
+```
+
+```text
+Show me my job applications.
+```
+
+```text
+Search for job applications at Google.
+```
+
+```text
+Add a note to my Google Software Engineer application.
+```
+
+```text
+Show me statistics about my job applications.
+```
+
+The exact input fields required by each tool can also be checked in MCP Inspector.
+
+## Troubleshooting
+
+### 1. `npm install` fails
+
+Make sure Node.js 20 or later is installed:
+
+```bash
+node -v
+```
+
+If Node.js is missing or the version is too old, install a supported version and run:
+
+```bash
+npm install
+```
+
+again.
+
+### 2. MCP Inspector cannot connect to the server
+
+Make sure you are running the command from the project root:
+
+```bash
+npm run inspect
+```
+
+Also make sure there are no TypeScript or dependency errors in the terminal.
+
+If the server is already running separately with `npm run dev`, stop it before starting Inspector if both commands try to use the same server process.
+
+### 3. A tool cannot find or update an application
+
+Check that:
+
+```text
+data/job-applications.json
+```
+
+exists and contains valid JSON data.
+
+For tests, restore the fixture data before trying another operation. Also make sure the company name and job title match an existing application.
 
 ## License
 
-MIT — built for [NextFlows Academy](https://nextflows.ai/academy) students.
+MIT License.

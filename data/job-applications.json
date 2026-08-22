@@ -1,17 +1,6 @@
 [
   {
     "company": "Google",
-    "jobTitle": "Software Engineer",
-    "applicationDate": "2026-07-10",
-    "applicationLink": "https://careers.google.com/jobs/1001",
-    "status": "Interview",
-    "notes": [
-      "Completed OA",
-      "Technical interview scheduled"
-    ]
-  },
-  {
-    "company": "Google",
     "jobTitle": "Cloud Engineer",
     "applicationDate": "2026-07-12",
     "applicationLink": "https://careers.google.com/jobs/1002",
@@ -141,6 +130,15 @@
     "jobTitle": "Software Engineer",
     "applicationDate": "2026-08-05",
     "applicationLink": "https://careers.oracle.com/jobs/6002",
+    "status": "Applied",
+    "notes": []
+  },
+ 
+  {
+    "company": "Google",
+    "jobTitle": "Software Engineer",
+    "applicationDate": "2026-07-29",
+    "applicationLink": "https://careers.google.com/jobs/12345",
     "status": "Applied",
     "notes": []
   }

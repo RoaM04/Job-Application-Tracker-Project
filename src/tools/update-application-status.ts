@@ -22,26 +22,60 @@ export function registerUpdateApplicationStatusTool(
       try {
         const applications = await readJobApplications();
 
-        const application = applications.find(
+        const normalizedCompany = company.trim().toLowerCase();
+        const normalizedJobTitle = jobTitle.trim().toLowerCase();
+
+        const matchingApplications = applications.filter(
           (application) =>
             application.company.trim().toLowerCase() ===
-              company.trim().toLowerCase() &&
+              normalizedCompany &&
             application.jobTitle.trim().toLowerCase() ===
-              jobTitle.trim().toLowerCase()
+              normalizedJobTitle
         );
 
-        if (!application) {
+        // No matching application
+        if (matchingApplications.length === 0) {
           return {
             isError: true,
             content: [
               {
                 type: "text",
-                text: `Job application for '${jobTitle}' at '${company}' was not found.`,
+                text: `Job application for '${company.trim()}' at '${jobTitle.trim()}' was not found.`,
               },
             ],
           };
         }
 
+        // Multiple matching applications
+        if (matchingApplications.length > 1) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text:
+                  "Multiple matching applications found. Update was not performed.",
+              },
+            ],
+          };
+        }
+
+        // Exactly one matching application
+        const application = matchingApplications[0];
+
+        // Requested status is already the current status
+        if (application.status === status) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: `Application is already in ${status} status. No update was performed.`,
+              },
+            ],
+          };
+        }
+
+        // Update status
         application.status = status;
 
         await writeJobApplications(applications);
@@ -52,8 +86,7 @@ export function registerUpdateApplicationStatusTool(
               type: "text",
               text: JSON.stringify(
                 {
-                  message:
-                    "Application status updated successfully.",
+                  message: "Application status updated successfully.",
                   company: application.company,
                   jobTitle: application.jobTitle,
                   status: application.status,

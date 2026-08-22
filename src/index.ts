@@ -27,7 +27,7 @@ function createServer(): McpServer {
   registerDeleteJobApplicationTool(server);
   registerAddJobApplicationNoteTool(server);
   registerUpdateApplicationStatusTool(server);
-   registerListJobApplicationsTool(server);
+  registerListJobApplicationsTool(server);
   registerGetApplicationStatisticsTool(server);
   registerUpdateJobApplicationDetailsTool(server);
   registerGetJobApplicationDetailsTool(server);
@@ -38,4 +38,6 @@ function createServer(): McpServer {
 
 void serveStdio(createServer);
 
-console.error("Job Application Tracker MCP server running on stdio");
+console.error(
+  "Job Application Tracker MCP server running on stdio"
+);

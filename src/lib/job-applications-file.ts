@@ -41,6 +41,27 @@ const DATA_FILE_PATH = ensurePathInsideDataDirectory(
     "job-applications.json"
   )
 );
+let jobApplicationsWriteLock: Promise<void> = Promise.resolve();
+
+export async function withJobApplicationsWriteLock<T>(
+  operation: () => Promise<T>
+): Promise<T> {
+  const previousLock = jobApplicationsWriteLock;
+
+  let releaseLock!: () => void;
+
+  jobApplicationsWriteLock = new Promise<void>((resolve) => {
+    releaseLock = resolve;
+  });
+
+  await previousLock;
+
+  try {
+    return await operation();
+  } finally {
+    releaseLock();
+  }
+}
 export async function readJobApplications(): Promise<
   JobApplication[]
 > {
