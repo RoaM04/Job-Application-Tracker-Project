@@ -47,15 +47,17 @@ export function registerListJobApplicationsTool(
           ],
         };
       } catch (error) {
+        console.error(
+          "[list_job_applications] Failed:",
+          error
+        );
+
         return {
           isError: true,
           content: [
             {
               type: "text",
-              text:
-                error instanceof Error
-                  ? error.message
-                  : "Failed to read job applications.",
+              text: "Failed to read job applications.",
             },
           ],
         };
