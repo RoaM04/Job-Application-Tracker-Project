@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Application Manager - MCP Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6C63FF;
+            --primary-dark: #5a52d5;
+            --primary-light: #8b83ff;
+            --secondary: #FF6584;
+            --bg-dark: #0a0a1a;
+            --bg-card: #14142b;
+            --bg-input: #1e1e3f;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0c0;
+            --text-muted: #6a6a8a;
+            --border-color: #2a2a4a;
+            --success: #00d4aa;
+            --danger: #ff4757;
+            --warning: #ffa502;
+            --info: #4ecdc4;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            --bg-dark: #f0f2f5;
+            --bg-card: #ffffff;
+            --bg-input: #f8f9fa;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --text-muted: #8a8aaa;
+            --border-color: #e1e4e8;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-input);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes spinLogo {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .navbar {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 16px 28px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-spinner {
+            font-size: 32px;
+            animation: spinLogo 8s linear infinite;
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .badge-mcp {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            -webkit-text-fill-color: white;
+        }
+
+        .navbar-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.35);
+        }
+        .btn-primary:active {
+            animation: pulse 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: var(--bg-input);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-secondary:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--bg-dark);
+        }
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .theme-toggle {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+            border-color: var(--primary);
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px 16px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+            font-weight: 500;
+        }
+
+        .stat-icon {
+            font-size: 18px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+            height: calc(100vh - 200px);
+            min-height: 500px;
+        }
+
+        .tools-sidebar {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            overflow-y: auto;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tools-sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .tools-sidebar-header h2 {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .tools-count {
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--bg-input);
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+
+        .tool-search {
+            flex-shrink: 0;
+            margin-bottom: 14px;
+        }
+
+        .tool-search input {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .tool-search input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+        }
+
+        .tool-search input::placeholder {
+            color: var(--text-muted);
+        }
+
+        #toolsList {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .tool-item {
+            padding: 12px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 6px;
+            border: 1px solid transparent;
+            animation: fadeInUp 0.3s ease forwards;
+            opacity: 0;
+        }
+
+        .tool-item:hover {
+            background: var(--bg-input);
+            border-color: var(--border-color);
+            transform: translateX(4px);
+        }
+
+        .tool-item.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 4px 20px rgba(108, 99, 255, 0.25);
+            transform: translateX(0);
+        }
+
+        .tool-item .tool-name {
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-item .tool-icon {
+            font-size: 16px;
+            width: 28px;
+            text-align: center;
+        }
+
+        .tool-item .tool-description {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 3px;
+            padding-left: 38px;
+            word-wrap: break-word;
+        }
+
+        .tool-item.active .tool-description {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .tool-item .tool-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 6px;
+            flex-shrink: 0;
+        }
+
+        .content-area {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            overflow-y: auto;
+            transition: var(--transition);
+        }
+
+        .content-area h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            word-wrap: break-word;
+        }
+
+        .content-area .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 14px;
+            word-wrap: break-word;
+        }
+
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-group label .required {
+            color: var(--danger);
+            margin-left: 4px;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.12);
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .input-group select option {
+            background: var(--bg-card);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .results-section {
+            margin-top: 20px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .results-section h3 {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .result-box {
+            background: var(--bg-input);
+            border-radius: 10px;
+            padding: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.6;
+            border: 1px solid var(--border-color);
+        }
+
+        .result-box.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .result-box.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .applications-list {
+            display: grid;
+            gap: 12px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .application-card {
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 18px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .application-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .application-card:hover::after {
+            opacity: 1;
+        }
+
+        .application-card:hover {
+            border-color: var(--primary);
+            transform: translateX(-4px);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.1);
+        }
+
+        .application-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .application-company {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .application-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: capitalize;
+            border: 1px solid transparent;
+        }
+
+        .status-applied {
+            background: rgba(0, 212, 170, 0.12);
+            color: var(--success);
+            border-color: rgba(0, 212, 170, 0.2);
+        }
+        .status-interview {
+            background: rgba(108, 99, 255, 0.12);
+            color: #8f88ff;
+            border-color: rgba(108, 99, 255, 0.2);
+        }
+        .status-accepted {
+            background: rgba(46, 213, 115, 0.12);
+            color: #2ed573;
+            border-color: rgba(46, 213, 115, 0.2);
+        }
+        .status-rejected {
+            background: rgba(255, 71, 87, 0.12);
+            color: var(--danger);
+            border-color: rgba(255, 71, 87, 0.2);
+        }
+        .status-pending {
+            background: rgba(160, 160, 192, 0.12);
+            color: var(--text-secondary);
+            border-color: rgba(160, 160, 192, 0.2);
+        }
+
+        .application-job {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .application-details {
+            display: grid;
+            gap: 5px;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .application-detail {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            word-wrap: break-word;
+        }
+
+        .application-detail strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .application-link {
+            color: var(--primary-light);
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .application-link:hover {
+            text-decoration: underline;
+        }
+
+        .application-notes {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .application-notes-title {
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .application-note {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 2px;
+            padding-left: 8px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state .big-icon {
+            font-size: 56px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .empty-state h2 {
+            font-size: 20px;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--border-color);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spinLogo 0.8s linear infinite;
+            margin-right: 8px;
+        }
+
+        #toastContainer {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 420px;
+            width: 100%;
+        }
+
+        .toast {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-right: 4px solid var(--primary);
+            color: var(--text-primary);
+            padding: 14px 18px;
+            border-radius: 12px;
+            animation: slideInRight 0.3s ease;
+            box-shadow: var(--shadow);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .toast.success { border-right-color: var(--success); }
+        .toast.error { border-right-color: var(--danger); }
+        .toast.warning { border-right-color: var(--warning); }
+        .toast.info { border-right-color: var(--info); }
+
+        .toast .toast-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .toast .toast-message {
+            flex: 1;
+        }
+
+        .toast .toast-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0 4px;
+            transition: var(--transition);
+        }
+        .toast .toast-close:hover {
+            color: var(--text-primary);
+        }
+
+        .quick-add-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 280px 1fr;
+                gap: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+            .main-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+                min-height: auto;
+                gap: 16px;
+            }
+            .tools-sidebar {
+                max-height: 320px;
+                min-height: 200px;
+            }
+            .content-area {
+                min-height: 400px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .navbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+                padding: 16px;
+            }
+            .navbar-actions {
+                justify-content: center;
+            }
+            .stats-bar {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 8px;
+            }
+            .stat-card {
+                padding: 10px 12px;
+            }
+            .stat-number {
+                font-size: 22px;
+            }
+            .application-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            #toastContainer {
+                right: 12px;
+                left: 12px;
+                max-width: none;
+            }
+            .quick-add-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-bar {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .stat-card:nth-child(4),
+            .stat-card:nth-child(5) {
+                display: none;
+            }
+            .navbar h1 {
+                font-size: 18px;
+            }
+            .logo-spinner {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo-container">
+            <span class="logo-spinner">📋</span>
+            <h1>Job Application Manager</h1>
+            <span class="badge-mcp">MCP</span>
+        </div>
+        <div class="navbar-actions">
+            <button class="btn btn-success" onclick="addSeedData()" title="Add sample applications">
+                🌱 Sample Data
+            </button>
+            <button class="btn btn-secondary" onclick="refreshTools()">
+                🔄 Refresh
+            </button>
+            <button class="btn btn-secondary" onclick="clearResults()">
+                🗑️ Clear
+            </button>
+            <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                🌙
+            </button>
+        </div>
+    </nav>
+
+   
+
+    <div class="main-layout">
+
+        <aside class="tools-sidebar" id="toolsSidebar">
+            <div class="tools-sidebar-header">
+                <h2>🧰 Available Tools</h2>
+                <span class="tools-count" id="toolsCount">0</span>
+            </div>
+
+            <div class="tool-search">
+                <input
+                    type="text"
+                    id="toolSearch"
+                    placeholder="🔍 Search tools..."
+                    oninput="filterTools(this.value)"
+                />
+            </div>
+
+            <div id="toolsList">
+                <div class="empty-state" style="padding:20px;">
+                    <span class="big-icon" style="font-size:32px;">⏳</span>
+                    <p>Loading tools...</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content-area" id="contentArea">
+
+           
+
+            <div class="empty-state" id="welcomeState">
+                <span class="big-icon">👋</span>
+                <h2>Welcome to Job Application Manager</h2>
+                <p style="margin-top:6px;">Select a tool from the sidebar or add an application above</p>
+                <div style="margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+                    <span style="background:var(--bg-input); padding:6px 14px; border-radius:8px; font-size:13px;">📊 Statistics</span>
+                    <span style="background:var(--bg-input); padding:6px 14px; border-radius:8px; font-size:13px;">🔍 Search</span>
+                    <span style="background:var(--bg-input); padding:6px 14px; border-radius:8px; font-size:13px;">➕ Add</span>
+                    <span style="background:var(--bg-input); padding:6px 14px; border-radius:8px; font-size:13px;">✏️ Update</span>
+                </div>
+            </div>
+
+            <div id="toolContent" style="display:none;">
+                <h2 id="toolTitle">Tool Name</h2>
+                <p class="subtitle" id="toolDescription">Tool description</p>
+
+                <form id="toolForm" onsubmit="executeTool(event)">
+                    <div id="formFields"></div>
+                    <button type="submit" class="btn btn-primary" id="executeBtn">
+                        🚀 Execute Tool
+                    </button>
+                </form>
+
+                <div class="results-section" id="resultsSection" style="display:none;">
+                    <h3>📊 Results</h3>
+                    <div class="result-box" id="resultBox"></div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="toastContainer"></div>
+
+    <script>
+        const API_URL = 'http://localhost:3001';
+        let currentTool = null;
+        let toolsData = [];
+        let statsInterval = null;
+
+        const TOOL_COLORS = {
+            'add_job_application': '#00d4aa',
+            'delete_job_application': '#ff4757',
+            'update_application_status': '#ffa502',
+            'search_job_applications': '#6C63FF',
+            'list_job_applications': '#4ecdc4',
+            'get_application_statistics': '#a29bfe',
+            'add_job_application_note': '#fd79a8',
+            'remove_job_application_note': '#d63031',
+            'update_job_application_details': '#fdcb6e',
+            'get_job_application_details': '#00cec9',
+            'search_applications_by_date_range': '#0984e3'
+        };
+
+        const TOOL_ICONS = {
+            'add_job_application': '➕',
+            'delete_job_application': '🗑️',
+            'update_application_status': '✏️',
+            'search_job_applications': '🔍',
+            'list_job_applications': '📋',
+            'get_application_statistics': '📊',
+            'add_job_application_note': '📝',
+            'remove_job_application_note': '❌',
+            'update_job_application_details': '🔄',
+            'get_job_application_details': '📄',
+            'search_applications_by_date_range': '📅'
+        };
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            const btn = document.querySelector('.theme-toggle');
+            btn.textContent = newTheme === 'light' ? '🌙' : '☀️';
+            showToast(`Switched to ${newTheme} mode`, 'info');
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (themeBtn) {
+            themeBtn.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            const icons = {
+                success: '✅',
+                error: '❌',
+                warning: '⚠️',
+                info: 'ℹ️'
+            };
+
+            toast.innerHTML = `
+                <span class="toast-icon">${icons[type] || 'ℹ️'}</span>
+                <span class="toast-message">${escapeHTML(message)}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+            `;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.style.animation = 'slideOutRight 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 3500);
+        }
+
+        async function fetchTools() {
+            try {
+                const response = await fetch(`${API_URL}/api/tools`);
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                if (Array.isArray(data)) {
+                    toolsData = data;
+                } else if (data.tools && Array.isArray(data.tools)) {
+                    toolsData = data.tools;
+                } else {
+                    toolsData = [];
+                }
+
+                renderToolsList(toolsData);
+                const countEl = document.getElementById('toolsCount');
+                if (countEl) countEl.textContent = toolsData.length;
+
+                if (toolsData.length > 0 && !currentTool) {
+                    selectTool(toolsData[0].name);
+                }
+
+                showToast(`Loaded ${toolsData.length} tools`, 'success');
+
+            } catch (error) {
+                console.error('Failed to load tools:', error);
+                const listEl = document.getElementById('toolsList');
+                if (listEl) {
+                    listEl.innerHTML = `
+                        <div class="empty-state" style="padding:20px;">
+                            <span class="big-icon" style="font-size:32px;">❌</span>
+                            <p>Failed to load tools</p>
+                            <p style="font-size:12px; margin-top:6px; color:var(--text-muted);">${escapeHTML(error.message)}</p>
+                            <p style="font-size:11px; margin-top:4px; color:var(--text-muted);">
+                                Make sure the server is running on ${API_URL}
+                            </p>
+                            <button class="btn btn-primary" style="margin-top:12px;" onclick="fetchTools()">
+                                🔄 Retry
+                            </button>
+                        </div>
+                    `;
+                }
+                showToast('Failed to connect to MCP server', 'error');
+            }
+        }
+
+        function renderToolsList(tools) {
+            const container = document.getElementById('toolsList');
+            if (!container) return;
+
+            if (!tools || tools.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="padding:20px;">
+                        <span class="big-icon" style="font-size:32px;">📭</span>
+                        <p>No tools available</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+
+            tools.forEach((tool, index) => {
+                const item = document.createElement('div');
+                item.className = 'tool-item';
+                item.dataset.tool = tool.name;
+
+                const color = TOOL_COLORS[tool.name] || '#636e72';
+                const icon = TOOL_ICONS[tool.name] || '🔧';
+
+                item.innerHTML = `
+                    <div class="tool-name">
+                        <span class="tool-icon">${icon}</span>
+                        ${escapeHTML(tool.name)}
+                        <span class="tool-dot" style="background:${color};"></span>
+                    </div>
+                    <div class="tool-description">${escapeHTML(tool.description || 'No description')}</div>
+                `;
+
+                item.addEventListener('click', () => selectTool(tool.name));
+                container.appendChild(item);
+            });
+        }
+
+        function filterTools(query) {
+            const items = document.querySelectorAll('.tool-item');
+            const search = query.toLowerCase().trim();
+
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const name = item.dataset.tool.toLowerCase();
+                const desc = item.querySelector('.tool-description')?.textContent?.toLowerCase() || '';
+                const match = name.includes(search) || desc.includes(search);
+
+                item.style.display = match ? 'block' : 'none';
+                if (match) visibleCount++;
+            });
+
+            const countEl = document.getElementById('toolsCount');
+            if (countEl) {
+                countEl.textContent = `${visibleCount} / ${toolsData.length}`;
+            }
+        }
+
+        function selectTool(toolName) {
+            currentTool = toolsData.find(t => t.name === toolName);
+            if (!currentTool) {
+                showToast(`Tool "${toolName}" not found`, 'error');
+                return;
+            }
+
+            document.querySelectorAll('.tool-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.tool === toolName);
+            });
+
+            showToolContent(currentTool);
+        }
+
+        function showToolContent(tool) {
+            const welcomeEl = document.getElementById('welcomeState');
+            const contentEl = document.getElementById('toolContent');
+
+            if (welcomeEl) welcomeEl.style.display = 'none';
+            if (contentEl) contentEl.style.display = 'block';
+
+            const icon = TOOL_ICONS[tool.name] || '🔧';
+            const titleEl = document.getElementById('toolTitle');
+            const descEl = document.getElementById('toolDescription');
+
+            if (titleEl) titleEl.textContent = `${icon} ${tool.name}`;
+            if (descEl) descEl.textContent = tool.description || 'No description available';
+
+            const formContainer = document.getElementById('formFields');
+            if (!formContainer) return;
+
+            formContainer.innerHTML = '';
+
+            const params = tool.params || tool.parameters || [];
+
+            if (params && params.length > 0) {
+                const rows = [];
+                let currentRow = [];
+
+                params.forEach((param, index) => {
+                    const field = createField(param);
+                    currentRow.push(field);
+
+                    if (currentRow.length === 2 || index === params.length - 1) {
+                        rows.push(currentRow);
+                        currentRow = [];
+                    }
+                });
+
+                rows.forEach(row => {
+                    const rowDiv = document.createElement('div');
+                    rowDiv.className = 'form-row';
+                    row.forEach(field => rowDiv.appendChild(field));
+                    formContainer.appendChild(rowDiv);
+                });
+
+            } else {
+                formContainer.innerHTML = `
+                    <div class="input-group">
+                        <p style="color: var(--text-secondary); font-size:14px;">
+                            ⚡ This tool does not require any input parameters
+                        </p>
+                    </div>
+                `;
+            }
+
+            const resultsEl = document.getElementById('resultsSection');
+            if (resultsEl) resultsEl.style.display = 'none';
+        }
+
+        function createField(param) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'input-group';
+
+            const label = document.createElement('label');
+            const labelText = param.name || param.label || 'field';
+
+            label.textContent = labelText;
+
+            if (param.required) {
+                const required = document.createElement('span');
+                required.className = 'required';
+                required.textContent = '*';
+                label.appendChild(required);
+            }
+
+            wrapper.appendChild(label);
+
+            let input;
+            const fieldType = param.type || 'string';
+
+            if (param.enum && param.enum.length > 0) {
+                input = document.createElement('select');
+
+                if (!param.required) {
+                    const emptyOption = document.createElement('option');
+                    emptyOption.value = '';
+                    emptyOption.textContent = 'Select...';
+                    input.appendChild(emptyOption);
+                }
+
+                param.enum.forEach(value => {
+                    const option = document.createElement('option');
+                    option.value = value;
+                    option.textContent = value;
+                    input.appendChild(option);
+                });
+            } else if (fieldType === 'checkbox' || fieldType === 'boolean') {
+                input = document.createElement('input');
+                input.type = 'checkbox';
+                input.name = param.name || param.label || 'field';
+                input.className = 'form-control';
+                input.style.width = 'auto';
+                input.style.cursor = 'pointer';
+
+                wrapper.appendChild(input);
+                return wrapper;
+            } else if (fieldType === 'number' || fieldType === 'integer') {
+                input = document.createElement('input');
+                input.type = 'number';
+                if (fieldType === 'integer') input.step = '1';
+            } else {
+                input = document.createElement('input');
+                input.type = 'text';
+            }
+
+            const fieldName = param.name || param.label || 'field';
+            input.name = fieldName;
+            input.placeholder = param.placeholder || param.description || '';
+            input.required = param.required || false;
+            input.className = 'form-control';
+
+            wrapper.appendChild(input);
+            return wrapper;
+        }
+
+        async function quickAddApplication() {
+            const company = document.getElementById('quickCompany')?.value?.trim();
+            const jobTitle = document.getElementById('quickJobTitle')?.value?.trim();
+            const status = document.getElementById('quickStatus')?.value || 'Applied';
+
+            if (!company || !jobTitle) {
+                showToast('❌ Please enter both Company and Job Title', 'error');
+                return;
+            }
+
+            const params = {
+                company: company,
+                jobTitle: jobTitle,
+                status: status,
+                applicationDate: new Date().toISOString().split('T')[0]
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/api/execute`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tool: 'add_job_application',
+                        params: params
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast(`✅ Added "${company} - ${jobTitle}" successfully!`, 'success');
+                    
+                    document.getElementById('quickCompany').value = '';
+                    document.getElementById('quickJobTitle').value = '';
+                    
+                    setTimeout(updateStats, 500);
+                    
+                    if (currentTool && 
+                        (currentTool.name === 'list_job_applications' || 
+                         currentTool.name === 'search_job_applications')) {
+                        setTimeout(() => {
+                            executeTool(new Event('submit'));
+                        }, 600);
+                    }
+                } else {
+                    showToast(`❌ Failed to add: ${result.error || 'Unknown error'}`, 'error');
+                }
+            } catch (error) {
+                console.error('Quick add failed:', error);
+                showToast('❌ Failed to connect to server', 'error');
+            }
+        }
+
+        async function addSeedData() {
+            const seedApplications = [
+                {
+                    company: "Google",
+                    jobTitle: "Software Engineer",
+                    status: "Interview",
+                    applicationDate: "2026-08-15",
+                    applicationLink: "https://careers.google.com",
+                    notes: ["Sent resume", "Interview on Monday"]
+                },
+                {
+                    company: "Microsoft",
+                    jobTitle: "Frontend Developer",
+                    status: "Applied",
+                    applicationDate: "2026-08-18",
+                    applicationLink: "https://careers.microsoft.com",
+                    notes: ["Applied via LinkedIn"]
+                },
+                {
+                    company: "Amazon",
+                    jobTitle: "Full Stack Developer",
+                    status: "Accepted",
+                    applicationDate: "2026-08-10",
+                    applicationLink: "https://amazon.jobs",
+                    notes: ["Official offer", "Offer accepted"]
+                },
+                {
+                    company: "Apple",
+                    jobTitle: "iOS Developer",
+                    status: "Rejected",
+                    applicationDate: "2026-08-05",
+                    applicationLink: "https://apple.com/careers",
+                    notes: ["Rejected after second interview"]
+                },
+                {
+                    company: "Meta",
+                    jobTitle: "React Developer",
+                    status: "Pending",
+                    applicationDate: "2026-08-20",
+                    applicationLink: "https://meta.com/careers",
+                    notes: ["Awaiting response"]
+                },
+                {
+                    company: "Tesla",
+                    jobTitle: "Embedded Engineer",
+                    status: "Applied",
+                    applicationDate: "2026-08-21",
+                    applicationLink: "https://tesla.com/careers",
+                    notes: ["Applied through company website"]
+                }
+            ];
+
+            let successCount = 0;
+            let errorCount = 0;
+
+            showToast('⏳ Adding sample data...', 'info');
+
+            for (const app of seedApplications) {
+                try {
+                    const response = await fetch(`${API_URL}/api/execute`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            tool: 'add_job_application',
+                            params: app
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        successCount++;
+                    } else {
+                        errorCount++;
+                        console.error('Failed to add:', app.company, result);
+                    }
+                } catch (error) {
+                    errorCount++;
+                    console.error('Error adding:', app.company, error);
+                }
+            }
+
+            showToast(
+                `✅ Added ${successCount} applications${errorCount > 0 ? `, ${errorCount} failed` : ''}`,
+                errorCount > 0 ? 'warning' : 'success'
+            );
+            
+            setTimeout(updateStats, 500);
+            
+            if (currentTool && 
+                (currentTool.name === 'list_job_applications' || 
+                 currentTool.name === 'search_job_applications')) {
+                setTimeout(() => {
+                    executeTool(new Event('submit'));
+                }, 600);
+            }
+        }
+
+        async function executeTool(event) {
+            event.preventDefault();
+
+            if (!currentTool) {
+                showResult('❌ Please select a tool first', 'error');
+                return;
+            }
+
+            const form = document.getElementById('toolForm');
+            if (!form) return;
+
+            const params = {};
+
+            for (const field of form.elements) {
+                if (!field.name) continue;
+
+                if (field.type === 'checkbox') {
+                    params[field.name] = field.checked;
+                    continue;
+                }
+
+                const value = field.value?.trim?.() || field.value;
+                if (value !== '' && value !== undefined && value !== null) {
+                    params[field.name] = value;
+                }
+            }
+
+            const btn = document.getElementById('executeBtn');
+            if (!btn) return;
+
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="loading-spinner"></span> Executing...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_URL}/api/execute`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tool: currentTool.name,
+                        params: params
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    const formattedApps = formatApplications(result.data);
+                    if (formattedApps) {
+                        showResult(formattedApps, 'success', true);
+                    } else {
+                        showResult(formatJSON(result.data), 'success');
+                    }
+
+                    showToast(`✅ ${currentTool.name} executed successfully!`, 'success');
+                    setTimeout(updateStats, 500);
+
+                } else {
+                    const errorMsg = result.error || result.message || 'Failed to execute tool';
+                    showResult(`❌ Error: ${errorMsg}`, 'error');
+                    showToast(`❌ ${errorMsg}`, 'error');
+                }
+
+            } catch (error) {
+                console.error('Tool execution failed:', error);
+                showResult(
+                    '❌ Failed to connect to MCP server. Make sure the server is running on ' + API_URL,
+                    'error'
+                );
+                showToast('❌ Connection to server failed', 'error');
+
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function showResult(content, type = 'success', isHTML = false) {
+            const section = document.getElementById('resultsSection');
+            const box = document.getElementById('resultBox');
+
+            if (!section || !box) return;
+
+            section.style.display = 'block';
+            box.className = `result-box ${type}`;
+
+            if (isHTML) {
+                box.innerHTML = content;
+            } else {
+                box.textContent = content;
+            }
+        }
+
+        function formatJSON(data) {
+            if (typeof data === 'string') return data;
+
+            try {
+                return JSON.stringify(data, null, 2);
+            } catch {
+                return String(data);
+            }
+        }
+
+        function formatApplications(data) {
+            let parsedData = data;
+
+            if (data && Array.isArray(data.content) && data.content.length > 0 &&
+                typeof data.content[0].text === 'string') {
+                try {
+                    const textContent = data.content[0].text;
+                    parsedData = JSON.parse(textContent);
+                } catch (e) {
+                    console.warn('Failed to parse MCP response content:', e);
+                    return null;
+                }
+            }
+
+            const apps = parsedData?.applications;
+            if (!apps || !Array.isArray(apps)) {
+                return null;
+            }
+
+            if (apps.length === 0) {
+                return `
+                    <div class="empty-state" style="padding:20px;">
+                        <span class="big-icon" style="font-size:40px;">📭</span>
+                        <p>No applications found. Click "Sample Data" to add some!</p>
+                    </div>
+                `;
+            }
+
+            const cards = apps.map((app) => {
+                const company = escapeHTML(app.company || 'N/A');
+                const jobTitle = escapeHTML(app.jobTitle || app.title || 'N/A');
+                const date = escapeHTML(app.applicationDate || app.date || app.createdAt || 'N/A');
+                const status = (app.status || 'pending').toLowerCase();
+                const link = escapeHTML(app.applicationLink || app.link || app.url || '');
+                const notes = Array.isArray(app.notes) ? app.notes : [];
+
+                const notesHTML = notes.length > 0 ? `
+                    <div class="application-notes">
+                        <div class="application-notes-title">📝 Notes</div>
+                        ${notes.map(note => `
+                            <div class="application-note">• ${escapeHTML(note)}</div>
+                        `).join('')}
+                    </div>
+                ` : '';
+
+                const linkHTML = link ? `
+                    <div class="application-detail">
+                        🔗 <strong>Link:</strong>
+                        <a class="application-link" href="${link}" target="_blank" rel="noopener noreferrer">
+                            ${link}
+                        </a>
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="application-card">
+                        <div class="application-header">
+                            <div class="application-company">🏢 ${company}</div>
+                            <span class="application-status status-${status}">${status}</span>
+                        </div>
+                        <div class="application-job">💼 ${jobTitle}</div>
+                        <div class="application-details">
+                            <div class="application-detail">
+                                📅 <strong>Date:</strong> <span>${date}</span>
+                            </div>
+                            ${linkHTML}
+                        </div>
+                        ${notesHTML}
+                    </div>
+                `;
+            }).join('');
+
+            const total = parsedData.total || apps.length;
+            const returned = parsedData.returned || apps.length;
+
+            return `
+                <div style="margin-bottom:14px;">
+                    <strong style="font-size:17px;">📋 Applications</strong>
+                    <span style="color:var(--text-muted); font-size:13px; margin-left:10px;">
+                        ${returned} of ${total}
+                    </span>
+                </div>
+                <div class="applications-list">${cards}</div>
+            `;
+        }
+
+        async function updateStats() {
+            try {
+                const response = await fetch(`${API_URL}/api/execute`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        tool: 'get_application_statistics',
+                        params: {}
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    let stats = result.data;
+
+                    if (stats.content && Array.isArray(stats.content)) {
+                        try {
+                            const text = stats.content[0]?.text;
+                            if (text) stats = JSON.parse(text);
+                        } catch (e) {
+                            console.warn('Failed to parse stats response:', e);
+                        }
+                    }
+
+                    const total = stats.total || stats.totalApplications || 0;
+                    const interview = stats.Interview || stats.interview || 0;
+                    const accepted = stats.Accepted || stats.accepted || 0;
+                    const rejected = stats.Rejected || stats.rejected || 0;
+                    const pending = total - (interview + accepted + rejected);
+
+                    const elTotal = document.getElementById('totalApps');
+                    const elInterview = document.getElementById('interviewApps');
+                    const elAccepted = document.getElementById('acceptedApps');
+                    const elRejected = document.getElementById('rejectedApps');
+                    const elPending = document.getElementById('pendingApps');
+
+                    if (elTotal) elTotal.textContent = total;
+                    if (elInterview) elInterview.textContent = interview;
+                    if (elAccepted) elAccepted.textContent = accepted;
+                    if (elRejected) elRejected.textContent = rejected;
+                    if (elPending) elPending.textContent = pending > 0 ? pending : 0;
+                }
+
+            } catch (error) {
+                console.error('Failed to update stats:', error);
+            }
+        }
+
+        function escapeHTML(value) {
+            if (!value) return '';
+            const div = document.createElement('div');
+            div.textContent = String(value);
+            return div.innerHTML;
+        }
+
+        function refreshTools() {
+            currentTool = null;
+            const listEl = document.getElementById('toolsList');
+            if (listEl) {
+                listEl.innerHTML = `
+                    <div class="empty-state" style="padding:20px;">
+                        <span class="big-icon" style="font-size:32px;">⏳</span>
+                        <p>Refreshing...</p>
+                    </div>
+                `;
+            }
+            fetchTools();
+            showToast('🔄 Refreshing tools...', 'info');
+        }
+
+        function clearResults() {
+            const section = document.getElementById('resultsSection');
+            const box = document.getElementById('resultBox');
+
+            if (section) section.style.display = 'none';
+            if (box) {
+                box.innerHTML = '';
+                box.className = 'result-box';
+            }
+            showToast('🗑️ Results cleared', 'info');
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+                const form = document.getElementById('toolForm');
+                if (form && form.style.display !== 'none') {
+                    form.dispatchEvent(new Event('submit'));
+                }
+            }
+            if (e.ctrlKey && e.shiftKey && e.key === 'R') {
+                e.preventDefault();
+                refreshTools();
+            }
+        });
+
+        fetchTools();
+        setTimeout(updateStats, 1000);
+        statsInterval = setInterval(updateStats, 30000);
+
+        console.log('🚀 Job Application Manager - MCP Dashboard ready!');
+        console.log(`📡 Connected to: ${API_URL}`);
+        console.log(`🌓 Theme: ${savedTheme}`);
+        console.log('⌨️ Shortcuts: Ctrl+Enter to execute, Ctrl+Shift+R to refresh');
+
+        window.addEventListener('beforeunload', () => {
+            if (statsInterval) clearInterval(statsInterval);
+        });
+    </script>
+
+</body>
+</html>

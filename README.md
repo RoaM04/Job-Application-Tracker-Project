@@ -59,6 +59,26 @@ Job Application Tracker MCP server running on stdio
 
 Keep the terminal running while using MCP Inspector.
 
+## Web Interface
+
+A small web UI is also included for browsing job applications outside of an AI assistant.
+
+Serve the static frontend (folder: `public/`):
+
+```bash
+npx serve public -p 3000
+```
+
+Start the backend web server:
+
+```bash
+node web/server.js
+```
+
+Once both are running, open `http://localhost:3000` in your browser.
+
+> Note: run each command in its own terminal tab, and keep both running at the same time. Update the port number above if `3000` is already in use on your machine.
+
 ## MCP Inspector
 
 To test the server with MCP Inspector, run:
@@ -82,7 +102,7 @@ The `examples/` directory contains example JSON inputs that can be reused when t
 ## Tools
 
 | Tool                                | Description                                                    |
-| ----------------------------------- | -------------------------------------------------------------- |
+| ------------------------------------ | --------------------------------------------------------------- |
 | `add_job_application`               | Adds a new job application to the local JSON data file.        |
 | `delete_job_application`            | Deletes an existing job application after confirmation.        |
 | `update_application_status`         | Updates the status of an existing job application.             |
@@ -136,6 +156,84 @@ Show me statistics about my job applications.
 ```
 
 The exact input fields required by each tool can also be checked in MCP Inspector.
+
+## Connect to Claude Desktop
+
+Inspector is great for development, but for Demo Day (or everyday use) you can connect this server directly to Claude Desktop so Claude can call the tools itself. This project uses a local **stdio** server, so it's added through Claude Desktop's config file — not through Claude.ai "Connectors" in the browser, which are for remote/HTTP servers.
+
+### 1. Prerequisites
+
+* Claude Desktop installed and updated: [claude.ai/download](https://claude.ai/download) (macOS or Windows).
+* Node 20+ on your PATH — check with `node -v` and `npx -v`.
+* The server already runs in Inspector via `npx tsx src/index.ts` (or `npm run dev`) from the repo root.
+* The server logs only to stderr (`console.error`), never `console.log` to stdout, since stdio transport owns stdout.
+
+### 2. Open Claude's MCP config
+
+In Claude Desktop: menu bar **Claude → Settings… → Developer → Edit Config**.
+
+This opens (or creates):
+
+* macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+* Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+If other MCP servers are already listed there, add this one alongside them — don't remove existing entries.
+
+### 3. Add this server
+
+Replace the `cwd` path below with the absolute path to your local clone of this repo. `cwd` must be absolute so `./data` fixtures resolve correctly (Claude does not start inside this folder).
+
+**macOS:**
+
+```json
+{
+  "mcpServers": {
+    "Job-Application-Tracker-Project": {
+      "command": "npx",
+      "args": ["-y", "tsx", "src/index.ts"],
+      "cwd": "/Users/YOUR_MAC_USERNAME/path/to/Job-Application-Tracker-Project"
+    }
+  }
+}
+```
+
+**Windows:** use `npx.cmd` (plain `npx` often fails), and double any backslashes in the JSON:
+
+```json
+{
+  "mcpServers": {
+    "Job-Application-Tracker-Project": {
+      "command": "npx.cmd",
+      "args": ["-y", "tsx", "src/index.ts"],
+      "cwd": "C:\\Users\\YOUR_WINDOWS_USERNAME\\path\\to\\Job-Application-Tracker-Project"
+    }
+  }
+}
+```
+
+If `npx` / `npx.cmd` shows up as "not found," put the full path from `which npx` (macOS) or `where npx` (Windows) in `command` instead.
+
+Make sure the file is valid JSON (no trailing commas, no comments), then save it.
+
+### 4. Fully restart Claude Desktop
+
+Quit the app completely — macOS: **Claude menu → Quit Claude**, not just closing the window — then reopen it. The config is only read at startup.
+
+### 5. Confirm the tools loaded
+
+In a new chat, open the tools/connectors panel next to the message box (**Manage connectors**, or the hammer/tools icon). You should see `Job-Application-Tracker-Project` and its tools listed.
+
+Try one of the [Example Prompts](#example-prompts) above and approve the tool call when Claude asks. If Claude picks the wrong tool, tighten that tool's description in the code and restart Claude Desktop.
+
+### 6. If the server doesn't appear — debug in this order
+
+* Confirm `cwd` is an absolute, existing folder (the repo root, not `src/`).
+* From that same folder, manually run `npx -y tsx src/index.ts`. It should sit waiting on stdio with no crash — stop it with `Ctrl+C`.
+* Check Claude's MCP logs:
+  * macOS: `~/Library/Logs/Claude/mcp.log` and `mcp-server-Job-Application-Tracker-Project.log`
+  * Windows: `%APPDATA%\Claude\logs\`
+* PATH issues: Claude Desktop does not load your shell profile, so use a full path to `npx`/`node` if needed.
+* Still stuck: copy the exact error from the log and use MCP Inspector as a fallback for testing/demoing.
 
 ## Troubleshooting
 
