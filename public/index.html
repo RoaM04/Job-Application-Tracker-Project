@@ -706,6 +706,64 @@
             margin-right: 8px;
         }
 
+
+        .team-footer {
+            margin-top: 24px;
+            padding: 18px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .team-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .team-members {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .team-members a {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .team-members a:hover {
+            border-color: var(--primary);
+            color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .team-members {
+                flex-direction: column;
+            }
+
+            .team-members a {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         #toastContainer {
             position: fixed;
             bottom: 24px;
@@ -817,7 +875,65 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
-            #toastContainer {
+    
+        .team-footer {
+            margin-top: 24px;
+            padding: 18px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .team-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .team-members {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .team-members a {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 14px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .team-members a:hover {
+            border-color: var(--primary);
+            color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .team-members {
+                flex-direction: column;
+            }
+
+            .team-members a {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        #toastContainer {
                 right: 12px;
                 left: 12px;
                 max-width: none;
@@ -930,6 +1046,16 @@
 
         </main>
     </div>
+
+
+    <footer class="team-footer">
+        <div class="team-title">👥 Project Team</div>
+        <div class="team-members">
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer">👩‍💻 Shaymaa Dar Taha</a>
+            <a href="https://github.com/RoaM04" target="_blank" rel="noopener noreferrer">👩‍💻 Roa Makhtoob</a>
+            <a href="https://github.com/Marwa-Faqeeh" target="_blank" rel="noopener noreferrer">👩‍💻 Marwa Faqeeh</a>
+        </div>
+    </footer>
 
     <div id="toastContainer"></div>
 
