@@ -75,6 +75,29 @@ export function registerUpdateApplicationStatusTool(
           };
         }
 
+        // Allowed status transitions
+        const allowedTransitions: Record<string, string[]> = {
+          Applied: ["Interview"],
+          Interview: ["Accepted", "Rejected"],
+          Accepted: [],
+          Rejected: [],
+        };
+
+        const allowedNextStatuses =
+          allowedTransitions[application.status] ?? [];
+
+        if (!allowedNextStatuses.includes(status)) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text: `Invalid status transition from ${application.status} to ${status}.`,
+              },
+            ],
+          };
+        }
+
         // Update status
         application.status = status;
 
