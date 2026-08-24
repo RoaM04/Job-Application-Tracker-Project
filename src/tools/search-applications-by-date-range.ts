@@ -17,6 +17,53 @@ export function registerSearchApplicationsByDateRangeTool(
     },
     async ({ startDate, endDate }) => {
       try {
+        // Validate that the dates are real calendar dates
+        const parsedStartDate = new Date(`${startDate}T00:00:00Z`);
+        const parsedEndDate = new Date(`${endDate}T00:00:00Z`);
+
+        if (
+          isNaN(parsedStartDate.getTime()) ||
+          parsedStartDate.toISOString().slice(0, 10) !== startDate
+        ) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text: "Invalid start date. Please use a valid date in YYYY-MM-DD format.",
+              },
+            ],
+          };
+        }
+
+        if (
+          isNaN(parsedEndDate.getTime()) ||
+          parsedEndDate.toISOString().slice(0, 10) !== endDate
+        ) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text: "Invalid end date. Please use a valid date in YYYY-MM-DD format.",
+              },
+            ],
+          };
+        }
+
+        // Validate date range
+        if (startDate > endDate) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text: "Start date must be before or equal to end date.",
+              },
+            ],
+          };
+        }
+
         const applications =
           await readJobApplications();
 
