@@ -30,7 +30,7 @@ These challenges helped us understand that building a working feature is only on
 
 ## Resume Bullet
 
-> Built and shipped a local Job Application Tracker MCP server using **TypeScript, MCP, and Zod**, implementing **10 MCP tools** for managing job applications, with validated local data handling, testing, and a public GitHub release with a live demo.
+> Built and shipped a local Job Application Tracker MCP server using **TypeScript, MCP, and Zod**, implementing **11 MCP tools** for managing job applications, with validated local data handling, testing, and a public GitHub release with a live demo.
 
 ## LinkedIn-Style Reflection
 
@@ -42,10 +42,13 @@ The project was challenging at times, especially when debugging the local server
 
 ## One Improvement for the Next Two Weeks
 
-If we continued working on the project, the first improvement I would make would be replacing the local JSON storage with a proper database.
+If we continued working on the project, the first improvement we would make would be replacing the local JSON storage with a proper database.
 
 This would make the application more scalable and reliable and would provide a stronger foundation for adding features such as application analytics, reminders, advanced filtering, and calendar integration.
 
 ## Thank You
 
-Thank you to our mentor for the guidance, feedback, and support throughout the six-week training. The feedback during development and demos helped us improve not only the project itself but also our understanding of how to build, test, document, and present a software project professionally.
+A special thank you to all our mentors for their guidance, feedback, and support throughout the six-week training. Your feedback during development and demos helped us improve not only our project, but also our understanding of how to build, test, document, and present a software project professionally.
+
+We would especially like to thank **Mohammad Jaradat** for his clear explanations of the concepts, continuous follow-up, and support throughout the training. His guidance helped us better understand the technical concepts and apply them confidently in our project.
+
