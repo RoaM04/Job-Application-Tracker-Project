@@ -14,7 +14,7 @@ export function registerAddJobApplicationNoteTool(
     {
       title: "Add Job Application Note",
       description:
-        "Add a note to an existing job application using the company name and job title.",
+        "Add a note to an existing job application using the company name and job title. Duplicate notes are not added.",
       inputSchema: addJobApplicationNoteInputSchema,
     },
     async ({ company, jobTitle, note }) => {
@@ -23,13 +23,9 @@ export function registerAddJobApplicationNoteTool(
 
         const application = applications.find(
           (currentApplication) =>
-            currentApplication.company
-              .trim()
-              .toLowerCase() ===
+            currentApplication.company.trim().toLowerCase() ===
               company.trim().toLowerCase() &&
-            currentApplication.jobTitle
-              .trim()
-              .toLowerCase() ===
+            currentApplication.jobTitle.trim().toLowerCase() ===
               jobTitle.trim().toLowerCase()
         );
 
@@ -38,14 +34,34 @@ export function registerAddJobApplicationNoteTool(
             isError: true,
             content: [
               {
-              type: "text",
-              text: "No matching job application was found.",
-      },
-    ],
-  };
+                type: "text",
+                text:
+                  "No matching job application was found. The note was not added.",
+              },
+            ],
+          };
         }
 
         const trimmedNote = note.trim();
+
+        const duplicateNote = application.notes.some(
+          (existingNote) =>
+            existingNote.trim().toLowerCase() ===
+            trimmedNote.toLowerCase()
+        );
+
+        if (duplicateNote) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text:
+                  "This note already exists for the specified job application. The note was not added.",
+              },
+            ],
+          };
+        }
 
         application.notes.push(trimmedNote);
 
@@ -69,6 +85,8 @@ export function registerAddJobApplicationNoteTool(
           ],
         };
       } catch (error) {
+        console.error("Add job application note failed:", error);
+
         return {
           isError: true,
           content: [
