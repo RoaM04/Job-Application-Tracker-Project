@@ -14,14 +14,14 @@ export function registerRemoveJobApplicationNoteTool(
     {
       title: "Remove Job Application Note",
       description:
-        "Remove a note from an existing job application using the company name and job title.",
+        "Remove a note from an existing job application using the company name and job title. If multiple applications match, removal is refused to prevent ambiguous changes.",
       inputSchema: removeJobApplicationNoteInputSchema,
     },
     async ({ company, jobTitle, note }) => {
       try {
         const applications = await readJobApplications();
 
-        const application = applications.find(
+        const matchingApplications = applications.filter(
           (currentApplication) =>
             currentApplication.company.trim().toLowerCase() ===
               company.trim().toLowerCase() &&
@@ -29,22 +29,39 @@ export function registerRemoveJobApplicationNoteTool(
               jobTitle.trim().toLowerCase()
         );
 
-        if (!application) {
+        if (matchingApplications.length === 0) {
           return {
             isError: true,
             content: [
               {
                 type: "text",
-                text: "Job application not found.",
+                text: `Remove failed: no job application was found for '${jobTitle}' at '${company}'. No data was changed.`,
               },
             ],
           };
         }
 
+        if (matchingApplications.length > 1) {
+          return {
+            isError: true,
+            content: [
+              {
+                type: "text",
+                text:
+                  "Remove failed: multiple matching job applications were found. The note was not removed to prevent an ambiguous change.",
+              },
+            ],
+          };
+        }
+
+        const application = matchingApplications[0];
+
+        const trimmedNote = note.trim();
+
         const noteIndex = application.notes.findIndex(
           (currentNote) =>
             currentNote.trim().toLowerCase() ===
-            note.trim().toLowerCase()
+            trimmedNote.toLowerCase()
         );
 
         if (noteIndex === -1) {
@@ -53,11 +70,14 @@ export function registerRemoveJobApplicationNoteTool(
             content: [
               {
                 type: "text",
-                text: "Note not found.",
+                text:
+                  "Remove failed: the specified note was not found. No data was changed.",
               },
             ],
           };
         }
+
+        const removedNote = application.notes[noteIndex];
 
         application.notes.splice(noteIndex, 1);
 
@@ -72,7 +92,7 @@ export function registerRemoveJobApplicationNoteTool(
                   message: "Note removed successfully.",
                   company: application.company,
                   jobTitle: application.jobTitle,
-                  removedNote: note,
+                  removedNote,
                 },
                 null,
                 2
@@ -81,6 +101,11 @@ export function registerRemoveJobApplicationNoteTool(
           ],
         };
       } catch (error) {
+        console.error(
+          "Remove job application note failed:",
+          error
+        );
+
         return {
           isError: true,
           content: [
@@ -88,8 +113,8 @@ export function registerRemoveJobApplicationNoteTool(
               type: "text",
               text:
                 error instanceof Error
-                  ? error.message
-                  : "Failed to remove note.",
+                  ? `Remove failed: ${error.message}`
+                  : "Remove failed: unable to remove the note.",
             },
           ],
         };
