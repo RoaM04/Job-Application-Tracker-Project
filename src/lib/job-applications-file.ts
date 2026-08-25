@@ -80,6 +80,7 @@ export async function readJobApplications(): Promise<
       console.log(
         "[readJobApplications] File is empty."
       );
+
       return [];
     }
 
@@ -134,7 +135,9 @@ export async function readJobApplications(): Promise<
         DATA_FILE_PATH
       );
 
-      return [];
+      throw new Error(
+        "The job applications data file was not found."
+      );
     }
 
     console.error(
