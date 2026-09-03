@@ -4,6 +4,8 @@ A local Model Context Protocol (MCP) server for managing job applications. The s
 
 The project works offline and does not require paid APIs or authentication.
 
+This project was built as part of the [NextFlows AI Academy](https://nextflows.ai/academy).
+
 ## Requirements
 
 Before running the project, make sure you have:
@@ -108,7 +110,7 @@ The `examples/` directory contains example JSON inputs that can be reused when t
 | `update_application_status`         | Updates the status of an existing job application.             |
 | `search_job_applications`           | Searches job applications using the available search criteria. |
 | `add_job_application_note`          | Adds a note to an existing job application.                    |
-| `remove_job_application_note`       | Removes a note from an existing job application.               |
+| `remove_job_application_note`       | Removes a note from an existing job application.                |
 | `list_job_applications`             | Lists stored job applications.                                 |
 | `get_application_statistics`        | Returns statistics about the stored job applications.          |
 | `update_job_application_details`    | Updates details of an existing job application.                |
@@ -276,6 +278,10 @@ data/job-applications.json
 exists and contains valid JSON data.
 
 For tests, restore the fixture data before trying another operation. Also make sure the company name and job title match an existing application.
+
+## Acknowledgments
+
+Built as part of the [NextFlows AI Academy](https://nextflows.ai/academy) program.
 
 ## License
 
